@@ -1,0 +1,15 @@
+services:
+  dta:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Please configure ADMIN_PASSWORD in .env}
+      DATA_DIR: /app/data
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    volumes:
+      - dta-data:/app/data
+    restart: unless-stopped
+volumes:
+  dta-data:
