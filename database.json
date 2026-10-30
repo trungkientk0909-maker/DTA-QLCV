@@ -1,0 +1,77 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "passwordHash": "b6af6877520cd252ce7ddbb33e834d59:c1bfe1048e3ab07ca5da37b379a799959c6680ade27ab617c6ce5d796d88de59a085cddb0db198293ee249232b66c2efb17a24a05e03a63dc210e9697c3f4441",
+      "fullName": "Quản trị hệ thống",
+      "department": "Tất cả",
+      "role": "Admin",
+      "requireChange": false
+    },
+    {
+      "username": "kienlc",
+      "passwordHash": "aa58c2042109b07bbefc8478c942f129:d23019a5f5f94f98dddec75945594dac27bfcfe6e49a947490b55726df5f219bd7dfdc5562dd8f6f10e5d3f88c6e1573c1e365cf60d75fbd23108cb2209b7d12",
+      "fullName": "Nguyễn Trung Kiên",
+      "department": "Phòng Văn Hóa-Xã hội",
+      "role": "User",
+      "requireChange": false
+    },
+    {
+      "username": "danvh",
+      "passwordHash": "f583639244510c32b58c317f7caedff1:649162fc94baab699dd75d741bcfbcfc5caf6691542cfe45a12009c8f13073f0ad50783298e1699b3552d6585590f325dd021b93e3fc1ff17585ff41f3e43584",
+      "fullName": "Phạm Quang Đán",
+      "department": "Phòng Văn Hóa-Xã hội",
+      "role": "Trưởng phòng",
+      "requireChange": false
+    }
+  ],
+  "tasks": [
+    {
+      "id": "73bcec03-b72b-47ea-86e1-30429a567cdb",
+      "soVB": "123",
+      "coQuan": "sad",
+      "ten": "Bao cáo demo2",
+      "cqPhuTrach": "Phòng Văn Hóa-Xã hội",
+      "nguoi": "Nguyễn Trung Kiên",
+      "ngayGiao": "2026-10-30",
+      "han": "2026-10-30",
+      "ngayHoanThanh": "2026-10-30",
+      "trangThai": "Hoàn thành",
+      "nhomCongViec": "",
+      "chamDiem": "",
+      "danhGiaBaoCao": "",
+      "soVBBanHanh": "",
+      "assigneeUsername": "kienlc"
+    },
+    {
+      "id": "1e2f6e23-aeae-4c2a-8ec7-18bb4e99de3e",
+      "soVB": "123/UBND-TH",
+      "coQuan": "UBND tỉnh",
+      "ten": "Bao cáo demo2",
+      "cqPhuTrach": "Phòng Văn Hóa-Xã hội",
+      "nguoi": "Nguyễn Trung Kiên",
+      "ngayGiao": "2026-10-30",
+      "han": "2026-10-30",
+      "ngayHoanThanh": "2026-10-30",
+      "trangThai": "Hoàn thành",
+      "nhomCongViec": "",
+      "chamDiem": "",
+      "danhGiaBaoCao": "",
+      "soVBBanHanh": "",
+      "assigneeUsername": "kienlc"
+    }
+  ],
+  "departments": [
+    "Phòng Văn Hóa-Xã hội"
+  ],
+  "assignees": [
+    {
+      "department": "Phòng Văn Hóa-Xã hội",
+      "name": "Nguyễn Trung Kiên"
+    },
+    {
+      "department": "Phòng Văn Hóa-Xã hội",
+      "name": "Phạm Quang Đán"
+    }
+  ]
+}

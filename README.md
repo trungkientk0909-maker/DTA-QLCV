@@ -1,4 +1,4 @@
-# DTA – Hệ thống quản lý công việc – UBND xã Khun Há
+# DTA Workspace Premium V5 – Quản lý công việc và phân quyền theo phòng ban
 
 Dự án Node.js độc lập, chuyển đổi từ **Code 1 (Apps Script)** và **Code 2 (HTML)**. Giữ bố cục gốc, chức năng đăng nhập, danh sách nhiệm vụ, lọc, thống kê, KPI, báo cáo tiến độ, duyệt công việc và xuất Excel.
 
@@ -34,15 +34,35 @@ git push -u origin main
 
 **Chú ý:** Deploy miễn phí có ổ đĩa tạm sẽ **mất dữ liệu khi khởi động lại**. Đây là bản phù hợp nhóm nhỏ, 1 tiến trình Node.js; không chạy đồng thời nhiều instance trên cùng file JSON. Cần backup `data/database.json` định kỳ, chỉ cho tài khoản quản trị hệ thống truy cập file này.
 
-## Quản lý tài khoản/nhân sự
+## V5: Bốn cấp phân quyền
 
-Sau khi đăng nhập quản trị toàn hệ thống, mở **http://localhost:3000/admin.html** (hoặc `/admin.html` trên tên miền triển khai). Có thể tạo tài khoản với quyền `Admin` hoặc `User`, và thêm nhân sự/phòng ban.
+| Vai trò | Phạm vi công việc | Quyền thao tác |
+| --- | --- | --- |
+| Admin hệ thống (`Admin` + `Tất cả`) | Tất cả phòng ban | Giao nhiệm vụ cho phòng ban **không cần chọn cá nhân**, phân công trực tiếp, theo dõi/sửa/xóa, quản lý tài khoản và phòng ban |
+| Trưởng phòng (`Trưởng phòng`) | Tất cả nhiệm vụ của phòng mình, cả nhiệm vụ chưa phân công cá nhân | Xem, nhận và phân công lại cho tài khoản thuộc phòng, cập nhật và quản lý nhiệm vụ của phòng |
+| Phó phòng (`Phó phòng`) | Tất cả nhiệm vụ của phòng mình | Tương tự Trưởng phòng trong bản này |
+| Nhân viên (`User`) | **Chỉ nhiệm vụ giao đích danh cho tài khoản** | Báo cáo tiến độ công việc được giao; không xem nhiệm vụ người khác hoặc nhiệm vụ mới giao chung cho phòng |
 
-- `Admin` + `Tất cả`: tạo/sửa/xóa mọi công việc, quản trị tài khoản.
-- `Admin` + phòng ban cụ thể: xem/sửa/xóa công việc của phòng mình (không tạo công việc mới).
-- `User`: xem công việc của phòng; chỉ cập nhật báo cáo của công việc do mình phụ trách; không được duyệt hoặc xóa.
+### Thao tác quản trị
 
-Server kiểm tra lại quyền, không chỉ ẩn nút trên giao diện. Mật khẩu được lưu bằng `scrypt` có salt riêng; phiên đăng nhập dùng cookie HttpOnly. Không đưa `data/database.json` hoặc mật khẩu vào GitHub.
+Sau khi đăng nhập Admin toàn hệ thống, vào mục **Quản lý phòng ban, tài khoản** hoặc `/admin.html`.
+- Thêm/Sửa/Xóa phòng ban; sửa tên tự cập nhật các nhiệm vụ và tài khoản liên quan. Không thể xóa phòng ban đang có công việc hoặc tài khoản.
+- Thêm/Sửa/Xóa tài khoản; sửa họ tên, vai trò và phòng ban (không đổi tên đăng nhập). Không thể xóa tài khoản còn công việc; phải chuyển giao nhiệm vụ trước. Không thể tự xóa Admin hiện đăng nhập.
+- Reset mật khẩu User từ Admin; thu hồi phiên đăng nhập cũ.
+- Danh sách nhân sự hiển thị tất cả người đã được thêm (kể cả chưa có tài khoản), có Sửa/Xóa. Nhân sự đã có tài khoản cần chỉnh sửa qua **Sửa tài khoản**.
+- **Giao nhiệm vụ cho phòng ban**: khi thêm công việc, chọn Phòng ban phụ trách, **để trống ô cá nhân** rồi Lưu. Trưởng/phó phòng vào xem nhiệm vụ đó và chọn cá nhân thuộc phòng để phân công tiếp.
+
+Quyền được máy chủ kiểm tra trong API, không chỉ ẩn trên giao diện. Bản V5 không bổ sung audit log đầy đủ và không thay thế đánh giá bảo mật chuyên nghiệp.
+
+## Cập nhật repo GitHub hiện có và Render
+
+1. Sao lưu thư mục `data`/tệp `database.json` nếu đang có dữ liệu (không đưa dữ liệu này lên GitHub).
+2. Giải nén ZIP, mở thư mục `DTA-Workspace-Premium` trong VS Code. Cấu trúc `public/index.html`, `public/admin.html` **phải được giữ nguyên**.
+3. Cập nhật repository `https://github.com/trungkientk0909-maker/DTA-QLCV` bằng Git từ đúng thư mục dự án (hoặc upload bảo toàn cấu trúc thư mục). Nếu đã clone repo, chép các file bản V5 vào đó rồi `git add .`, `git commit -m "Upgrade DTA Premium V5 permissions"`, `git push`.
+4. Render sẽ tự triển khai nếu kết nối nhánh `main` và bật Auto Deploy; nếu không, chọn Deploy latest commit.
+5. Cần cấu hình `ADMIN_PASSWORD` từ 12 ký tự khi khởi tạo mới, `COOKIE_SECURE=true` trên HTTPS.
+
+**Cảnh báo:** Render Free có hệ thống file tạm. Không dùng để lưu tài khoản/công việc thực tế trước khi chuyển sang lưu trữ bền vững. Không đưa `database.json` hoặc file `.env` chứa bí mật lên repository công khai. Khi đổi biến `ADMIN_PASSWORD`, mật khẩu tài khoản đã lưu trong database **không tự đổi**.
 
 ## Khác với bản Google Apps Script
 
@@ -53,7 +73,7 @@ Server kiểm tra lại quyền, không chỉ ẩn nút trên giao diện. Mật
 
 ## API
 
-`POST /api/login`, `POST /api/logout`, `POST /api/change-password`, `GET /api/data`, `POST /api/tasks`, `POST /api/tasks/delete`, `GET/POST /api/admin/users`, `POST /api/admin/assignees`.
+`POST /api/login`, `POST /api/logout`, `POST /api/change-password`, `GET /api/data`, `POST /api/tasks`, `POST /api/tasks/delete`, `GET/POST /api/admin/users`, `POST /api/admin/users/update`, `POST /api/admin/users/delete`, `POST /api/admin/users/reset-password`, `GET/POST /api/admin/departments`, `POST /api/admin/departments/update`, `POST /api/admin/departments/delete`, `GET/POST /api/admin/assignees`, `POST /api/admin/assignees/update`, `POST /api/admin/assignees/delete`.
 
 ## Lưu ý bảo mật khi triển khai Internet
 
