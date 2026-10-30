@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DTA Workspace | Đăng nhập</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <style>
+    :root {
+      --bg: #f3f4f6; --card: #ffffff; --primary: #4f46e5; --primary-hover: #3730a3; --primary-light: #f5f3ff;
+      --text-dark: #0f172a; --text-muted: #64748b; --success: #10b981; --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --danger: #ef4444; --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      --warning: #f59e0b; --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --info: #06b6d4; --info-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); --border-color: #e2e8f0;
+      --border-radius-lg: 20px; --border-radius-md: 12px; --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+      --shadow-md: 0 10px 30px -10px rgba(15, 23, 42, 0.08); --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --vnpt-blue: #004b92; --vnpt-blue-hover: #00366a; --gov-red: #da251d;
+    }
+    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text-dark); -webkit-font-smoothing: antialiased; }
+    #login-overlay-screen {
+      position: fixed; inset: 0; background: #1565c0 linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath fill-rule='evenodd' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm1-61c3.106 0 5.625-2.519 5.625-5.625S38.106 17.75 35 17.75s-5.625 2.519-5.625 5.625S31.894 23.375 35 23.375zm29 57c1.726 0 3.125-1.399 3.125-3.125s-1.399-3.125-3.125-3.125-3.125 1.399-3.125 3.125 1.399 3.125 3.125 3.125zM124 13c1.726 0 3.125-1.399 3.125-3.125S125.726 6.75 124 6.75s-3.125 1.399-3.125 3.125 1.399 3.125 3.125 3.125z'/%3E%3C/g%3E%3C/svg%3E");
+      display: flex; justify-content: center; align-items: center; z-index: 99999; padding: 20px; box-sizing: border-box;
+    }
+    .login-container-split { display: flex; width: 1200px; max-width: 95vw; align-items: center; justify-content: space-between; gap: 40px; }
+    .login-left-brand { flex: 1; color: #ffffff; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .login-left-brand h1 { font-size: 26px; font-weight: 700; margin: 0 0 10px 0; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); line-height: 1.4; }
+    .login-left-brand h2 { font-size: 32px; font-weight: 800; margin: 0 0 35px 0; color: #ffeb3b; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .login-left-brand .technical-support-info { text-align: left; font-size: 15px; opacity: 0.9; line-height: 2; }
+    .login-left-brand .technical-support-info i { margin-right: 10px; width: 20px; }
+    .login-box { background: #ffffff; padding: 40px; border-radius: 4px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); width: 450px; box-sizing: border-box; }
+    .login-box .national-emblem { text-align: center; margin-bottom: 25px; }
+    .national-emblem .emblem-icon { width: 70px; height: 70px; background: var(--gov-red); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #ffeb3b; font-size: 32px; border: 3px solid #ffeb3b; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .login-box h2 { margin-top: 0; font-size: 22px; font-weight: 700; text-align: center; color: var(--text-dark); letter-spacing: -0.5px; }
+    .login-box p.subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+    .login-box .input-group-modern { display: flex; align-items: center; border: 1px solid #cccccc; background: #f4f7fa; margin-bottom: 18px; border-radius: 4px; transition: var(--transition); }
+    .login-box .input-group-modern:focus-within { border-color: #004b92; background: #fff; }
+    .login-box .input-group-modern .input-addon-icon { padding: 14px 16px; color: #757575; border-right: 1px solid #dddddd; background: #eef2f5; min-width: 20px; text-align: center; }
+    .login-box .input-group-modern input { border: none; outline: none; background: transparent; padding: 14px 16px; width: 100%; font-size: 15px; color: var(--text-dark); }
+    .captcha-row-layout { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+    .captcha-row-layout .captcha-display-zone { background: #fff8e1; border: 1px dashed #ffb300; padding: 10px 20px; font-size: 24px; font-weight: 800; color: #d32f2f; letter-spacing: 5px; font-family: 'Courier New', monospace; user-select: none; border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); }
+    .captcha-display-zone::after { content: ""; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 45%, rgba(0,0,0,0.1) 45%, rgba(0,0,0,0.1) 55%, transparent 55%); background-size: 10px 10px; pointer-events: none; }
+    .forgot-password-link { text-align: right; margin-bottom: 0; font-size: 14px; }
+    .forgot-password-link a { color: #0d47a1; text-decoration: none; font-weight: 500; }
+    .forgot-password-link a:hover { text-decoration: underline; }
+    .login-action-buttons-group { display: flex; flex-direction: column; gap: 12px; }
+    .btn-vnpt-standard { width: 100%; padding: 14px; color: #ffffff; border: none; border-radius: 4px; font-weight: 700; font-size: 15px; cursor: pointer; transition: var(--transition); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .btn-vnpt-standard.btn-blue-primary { background: var(--vnpt-blue); }
+    .btn-vnpt-standard.btn-blue-primary:hover { background: var(--vnpt-blue-hover); }
+    .container { max-width: 98vw; margin: 0 auto; padding: 24px; box-sizing: border-box; }
+    #main-system-ui { display: none; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .banner { background: var(--primary-gradient); color: #fff; padding: 40px; border-radius: var(--border-radius-lg); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); margin-bottom: 30px; position: relative; overflow: hidden; }
+    .banner h1 { margin: 0; font-size: 30px; font-weight: 700; display: flex; align-items: center; gap: 14px; letter-spacing: -0.5px; }
+    .banner p { margin: 8px 0 0; opacity: 0.85; font-size: 15px; font-weight: 400; }
+    .user-profile-badge { background: rgba(255, 255, 255, 0.12); padding: 12px 22px; border-radius: 50px; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 12px; font-size: 14px; border: 1px solid rgba(255, 255, 255, 0.2); transition: var(--transition); }
+    .logout-action-link { color: #fcd34d; text-decoration: none; font-weight: 700; margin-left: 10px; cursor: pointer; }
+    .logout-action-link:hover { text-decoration: underline; }
+    .main-layout { display: flex; gap: 30px; align-items: flex-start; }
+    .sidebar { width: 310px; min-width: 310px; background: var(--card); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); padding: 28px 20px; box-sizing: border-box; border: 1px solid var(--border-color); }
+    .menu-group { margin-bottom: 28px; }
+    .menu-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 14px; padding-left: 8px; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-item { padding: 12px 16px; border-radius: var(--border-radius-md); margin-bottom: 6px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 12px; color: var(--text-dark); transition: var(--transition); }
+    .menu-item:hover { background: var(--primary-light); color: var(--primary); }
+    .menu-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+    .dept-item { font-weight: 600; background: #f8fafc; margin-top: 10px; justify-content: space-between; border: 1px solid var(--border-color); }
+    .dept-click-zone { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .toggle-icon { font-size: 12px; color: var(--text-muted); transition: var(--transition); }
+    .user-list { list-style: none; padding-left: 20px; margin: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-left: 2px solid var(--border-color); margin-left: 22px; }
+    .user-list.open { max-height: 550px; margin: 8px 0; }
+    .user-item { padding: 9px 14px; font-size: 13px; color: var(--text-muted); border-radius: var(--border-radius-md); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: var(--transition); }
+    .user-item:hover { background: #f8fafc; color: var(--primary); padding-left: 18px; }
+    .main-content { flex: 1; min-width: 0; }
+    .controls-row { display: flex; justify-content: flex-start; gap: 14px; margin-bottom: 28px; }
+    .btn { padding: 12px 24px; border-radius: var(--border-radius-md); border: none; cursor: pointer; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 10px; transition: var(--transition); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .btn-primary { background: var(--primary-gradient); color: #fff; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25); }
+    .btn-success { background: var(--success-gradient); color: #fff; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25); }
+    .btn-info { background: var(--info-gradient); color: #fff; box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25); }
+    .btn-warning { background: var(--warning-gradient); color: #fff; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25); }
+    .btn-danger { background: var(--danger-gradient); color: #fff; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25); }
+    .btn-outline { background: #fff; border: 1px solid var(--border-color); color: var(--text-dark); box-shadow: var(--shadow-sm); }
+    .stats { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+    .card { background: var(--card); border-radius: var(--border-radius-lg); padding: 24px 28px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); flex: 1; min-width: 220px; transition: var(--transition); cursor: pointer;}
+    .card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.12); }
+    .card.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
+    .stat-row { display: flex; align-items: center; }
+    .icon-sq { width: 54px; height: 54px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 20px; }
+    .val { font-size: 32px; font-weight: 700; color: var(--text-dark); line-height: 1; margin-bottom: 6px; letter-spacing: -1px; }
+    .label { color: var(--text-muted); font-size: 14px; font-weight: 500; }
+    .color-primary { background: #e0e7ff; color: #4f46e5; }
+    .color-success { background: #d1fae5; color: #059669; }
+    .color-danger { background: #fee2e2; color: #dc2626; }
+    .color-warning { background: #fef3c7; color: #d97706; }
+    .filter-panel { background: var(--card); padding: 24px; border-radius: var(--border-radius-lg); margin-bottom: 30px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
+    .filter-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.8px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .filter-item { position: relative; }
+    .filter-item i { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
+    .filter-item input, .filter-item select { padding: 12px 14px 12px 42px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); width: 100%; font-size: 14px; box-sizing: border-box; background-color: #fff; color: var(--text-dark); transition: var(--transition); }
+    .filter-item select { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; padding-right: 42px; }
+    .filter-item input:focus, .filter-item select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08); }
+    .filter-item select:disabled { background-color: #f1f5f9; cursor: not-allowed; color: var(--text-muted); }
+    .table-wrap { background: var(--card); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-color); overflow-x: auto; min-height: 350px; position: relative; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 2000px; table-layout: fixed; }
+    thead th, tbody td { padding: 18px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; box-sizing: border-box; word-wrap: break-word; }
+    thead th { background: #f8fafc; color: var(--text-dark); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 2; text-align: center; border-bottom: 2px solid var(--border-color); }
+    tbody td { text-align: center; color: #334155; }
+    thead th.align-left, tbody td.align-left { text-align: left; }
+    .col-stt { width: 65px; } .col-sovb { width: 135px; } .col-coquan { width: 165px; } .col-tencongviec { width: 450px; }
+    .col-phutrach { width: 185px; } .col-canhan { width: 165px; } .col-date { width: 120px; } .col-status { width: 155px; }
+    .col-nhomcv { width: 115px; } .col-diem { width: 90px; } .col-danhgia { width: 135px; } .col-vbbh { width: 125px; } .col-action { width: 160px; }
+    thead th.col-action, tbody td.col-action { position: sticky; right: 0; background: var(--card); box-shadow: -6px 0 12px rgba(0,0,0,0.02); z-index: 3; }
+    thead th.col-action { background: #f8fafc; z-index: 4; }
+    tbody tr:hover { background: #fafafa; }
+    tbody tr:hover td.col-action { background: #fafafa; }
+    .actions-cell { display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .actions-cell button { border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: var(--transition); display: inline-flex; align-items: center; gap: 4px; }
+    .status-tag { padding: 6px 14px; border-radius: 50px; font-weight: 600; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .status-tag-processing { background: #ecfeff; color: #06b6d4; border: 1px solid #cffafe; }
+    .status-tag-done { background: #ecfdf5; color: #10b981; border: 1px solid #d1fae5; }
+    .status-tag-overdue { background: #fef2f2; color: #ef4444; border: 1px solid #fee2e2; }
+    .status-tag-pending { background: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
+    .status-tag-rejected { background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; }
+    tr.row-quahan td { color: var(--danger) !important; font-weight: 600; }
+    tr.row-12h td { color: #f59e0b !important; font-weight: 700; text-shadow: 0px 0px 1px rgba(245,158,11,0.5); }
+    tr.row-24h td { color: #ca8a04 !important; font-weight: 600; }
+    .overlay { position: fixed; left: 0; top: 0; right: 0; bottom: 0; display: none; justify-content: center; align-items: center; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(5px); z-index: 9999; }
+    .modal { background: var(--card); width: 800px; max-width: 95%; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); transform: scale(0.95); opacity: 0; transition: var(--transition); border: 1px solid var(--border-color); overflow: hidden; }
+    .overlay.active { display: flex; opacity: 1; }
+    .overlay.active .modal { transform: scale(1); opacity: 1; }
+    .modal-header { padding: 22px 28px; border-bottom: 1px solid var(--border-color); background: #fff; }
+    .modal h3 { margin: 0; font-size: 20px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.5px; }
+    .modal-body { padding: 28px; max-height: 75vh; overflow-y: auto; }
+    .form-row { display: flex; gap: 20px; margin-bottom: 4px; }
+    .form-row .col { flex: 1; }
+    .input-group { margin-bottom: 18px; }
+    .input-group label { font-size: 13px; color: var(--text-dark); font-weight: 600; display: block; margin-bottom: 8px; }
+    .input-group input, .input-group select { width: 100%; padding: 12px 14px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); font-size: 14px; box-sizing: border-box; background: #fff; transition: var(--transition); }
+    .input-group input:focus, .input-group select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08); }
+    .modal .ft-right { display: flex; justify-content: flex-end; gap: 14px; margin-top: 30px; padding: 20px; border-top: 1px solid var(--border-color); }
+    .loading-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.75); backdrop-filter: blur(3px); display: none; justify-content: center; align-items: center; z-index: 10; }
+    .loading-spinner { border: 3px solid var(--border-color); border-top: 3px solid var(--primary); border-radius: 50%; width: 36px; height: 36px; animation: spin 0.8s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .toast-wrap { position: fixed; right: 24px; bottom: 24px; z-index: 10000; }
+    .toast { background: var(--text-dark); color: #fff; padding: 14px 24px; border-radius: var(--border-radius-md); margin-top: 12px; font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .pagination-controls { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; background: var(--card); border-top: 1px solid var(--border-color); border-bottom-left-radius: var(--border-radius-lg); border-bottom-right-radius: var(--border-radius-lg); }
+    .pagination-controls .page-info { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+    .pagination-controls .page-buttons button { padding: 8px 14px; margin: 0 4px; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); background: #fff; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-muted); transition: var(--transition); }
+    .pagination-controls .page-buttons button.active { background: var(--primary-gradient); color: #fff; border-color: var(--primary); }
+    .pagination-controls .page-buttons button:disabled { opacity: 0.3; cursor: not-allowed; }
+    footer { margin-top: 50px; text-align: center; color: var(--text-muted); font-size: 13px; font-weight: 400; padding-bottom: 20px; }
+    .stats-table-wrapper { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .stats-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: center; }
+    .stats-table th { background: #f1f5f9; color: #334155; padding: 14px 10px; font-weight: 700; border-bottom: 2px solid #cbd5e1; border-right: 1px solid #e2e8f0; white-space: nowrap; }
+    .stats-table th:last-child { border-right: none; }
+    .stats-table th.th-sub { font-size: 11px; background: #f8fafc; color: #64748b; border-top: 1px solid #e2e8f0; padding: 10px; }
+    .stats-table td { padding: 14px 10px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; vertical-align: middle; color: var(--text-dark); }
+    .stats-table td:last-child { border-right: none; }
+    .stats-table tbody tr:hover { background-color: #f8fafc; transition: background 0.2s; }
+    .stats-table tbody tr:last-child td { border-bottom: none; }
+    .badge-stat { display: inline-block; padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; min-width: 25px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); }
+    .b-total { background: #f1f5f9; color: #0f172a; }
+    .b-done { background: #d1fae5; color: #059669; }
+    .b-proc { background: #e0e7ff; color: #4f46e5; }
+    .b-over { background: #fee2e2; color: #dc2626; }
+    .b-pending { background: #fef3c7; color: #d97706; }
+    .badge-kpi { display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 600; font-size: 12px; white-space: nowrap; text-align: center; }
+    .kpi-xs { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .kpi-tot { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+    .kpi-ht { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
+    .kpi-cht { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .kpi-na { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+    /* DTA Login Pro 2026 - giao diện đăng nhập chuyên nghiệp */
+    .login-developer { display:none !important; }
+    #login-overlay-screen{
+      overflow-y:auto; min-height:100dvh; padding:34px 24px 56px; position:fixed;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(80,150,255,.22), transparent 32%),
+        radial-gradient(circle at 86% 20%, rgba(83,230,184,.18), transparent 30%),
+        radial-gradient(circle at 80% 82%, rgba(70,110,255,.18), transparent 36%),
+        linear-gradient(135deg, #071a33 0%, #0c2950 48%, #0d2140 100%);
+      isolation:isolate;
+    }
+    #login-overlay-screen::before{
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.09) 1px, transparent 1px);
+      background-size:58px 58px;
+      mask-image:linear-gradient(120deg, rgba(0,0,0,.94), rgba(0,0,0,.62));
+    }
+    #login-overlay-screen::after{
+      content:""; position:absolute; inset:auto auto 8% 48%; width:420px; height:420px;
+      background:radial-gradient(circle, rgba(255,255,255,.08), rgba(255,255,255,0) 65%);
+      filter:blur(10px); pointer-events:none;
+    }
+    #login-overlay-screen .login-container-split{
+      width:1180px; max-width:100%; gap:76px; position:relative; z-index:1;
+      align-items:center; justify-content:space-between;
+    }
+    #login-overlay-screen .login-left-brand{
+      flex:1; max-width:530px; min-width:0; align-items:flex-start; text-align:left;
+    }
+    #login-overlay-screen .login-brand-symbol{
+      display:inline-flex; align-items:center; gap:12px; padding:14px 18px; border-radius:999px;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#e8f0ff;
+      font-size:13px; font-weight:800; letter-spacing:2px; margin-bottom:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,.12);
+    }
+    #login-overlay-screen .login-brand-symbol i{font-size:18px; color:#6fe4ff;}
+    #login-overlay-screen .login-brand-kicker{
+      display:flex; align-items:center; gap:10px; color:#bcd4f5; font-size:13px; font-weight:600;
+      margin-bottom:18px;
+    }
+    #login-overlay-screen .live-dot{
+      width:8px; height:8px; border-radius:50%; background:#67e8b8;
+      box-shadow:0 0 0 5px rgba(103,232,184,.14);
+    }
+    #login-overlay-screen .login-left-brand h1{
+      margin:0 0 18px; font-size:clamp(34px, 4.1vw, 56px); line-height:1.08; letter-spacing:-1.8px;
+      font-weight:800; color:#f8fbff; text-transform:none; text-shadow:none;
+    }
+    #login-overlay-screen .login-left-brand h1 span{
+      color:#7ee4ff;
+      background:linear-gradient(90deg,#7fe5ff 0%, #a0b6ff 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    #login-overlay-screen .login-brand-description{
+      margin:0 0 30px; max-width:470px; color:#b5c8e6; font-size:15px; line-height:1.85;
+    }
+    #login-overlay-screen .login-brand-features{
+      display:grid; grid-template-columns:1fr; gap:14px; width:100%;
+    }
+    #login-overlay-screen .login-brand-features div{
+      display:flex; align-items:center; gap:14px; padding:16px 18px; border-radius:18px;
+      background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); color:#e6efff;
+      box-shadow:0 18px 35px rgba(4,16,38,.18);
+      backdrop-filter: blur(10px);
+    }
+    #login-overlay-screen .login-brand-features i{
+      width:42px; height:42px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center;
+      color:#fff; background:linear-gradient(135deg,#1e63d5 0%,#3b82f6 100%); box-shadow:0 10px 18px rgba(41,98,255,.28);
+      font-size:16px; flex-shrink:0;
+    }
+    #login-overlay-screen .login-brand-features span{font-size:14px; font-weight:600; line-height:1.55;}
+    #login-overlay-screen .login-box{
+      position:relative; width:460px; max-width:100%; padding:36px 34px 30px; border-radius:28px;
+      background:rgba(255,255,255,.96); border:1px solid rgba(255,255,255,.78);
+      box-shadow:0 32px 70px rgba(7,20,47,.38), 0 4px 14px rgba(8,18,36,.08);
+      overflow:hidden;
+    }
+    #login-overlay-screen .login-box::before{
+      content:""; position:absolute; inset:0 0 auto; height:6px;
+      background:linear-gradient(90deg,#1d68d2 0%,#2aaadf 45%,#67e8b8 100%);
+    }
+    #login-overlay-screen .login-card-logo{
+      width:64px; height:64px; border-radius:20px; display:flex; align-items:center; justify-content:center;
+      margin-bottom:22px; background:linear-gradient(135deg,#1a72de 0%,#1656c7 100%); color:#fff;
+      font-size:28px; box-shadow:0 18px 34px rgba(21,96,211,.28);
+    }
+    #login-overlay-screen .login-box h2{
+      text-align:left; margin:0 0 8px; font-size:22px; letter-spacing:-.8px; color:#0a1f44;
+    }
+    #login-overlay-screen .login-box p.subtitle{
+      text-align:left; margin:0 0 26px; color:#60708a; font-size:14px; line-height:1.7;
+    }
+    #login-overlay-screen .login-field-label{
+      display:block; margin:0 0 10px; color:#172a45; font-size:14px; font-weight:700;
+    }
+    #login-overlay-screen .input-group-modern{
+      display:flex; align-items:center; min-height:54px; margin-bottom:18px; border-radius:16px;
+      border:1px solid #d7e2f0; background:#f7faff; transition:all .22s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.82);
+    }
+    #login-overlay-screen .input-group-modern:focus-within{
+      border-color:#2a76dd; background:#fff; box-shadow:0 0 0 4px rgba(42,118,221,.12);
+    }
+    #login-overlay-screen .input-addon-icon{
+      padding:0 16px; background:transparent; border-right:none; color:#7a8ca6; min-width:auto;
+      font-size:16px;
+    }
+    #login-overlay-screen .input-group-modern input{
+      padding:15px 14px 15px 0; font-size:14px; color:#122748;
+    }
+    #login-overlay-screen .input-group-modern input::placeholder{ color:#8ea1bb; }
+    #login-overlay-screen .password-field{position:relative; padding-right:6px;}
+    #login-overlay-screen .password-toggle{
+      border:none; background:transparent; color:#7e91ad; width:42px; height:42px; border-radius:12px;
+      cursor:pointer; transition:all .2s ease; margin-right:6px;
+    }
+    #login-overlay-screen .password-toggle:hover{background:#edf4ff; color:#1f5fbf;}
+    #login-overlay-screen .captcha-row-layout{display:flex; gap:12px; align-items:stretch; margin-bottom:20px;}
+    #login-overlay-screen .captcha-row-layout .input-group-modern{flex:1.15; margin-bottom:0;}
+    #login-overlay-screen .captcha-display-zone{
+      flex:.82; display:flex; align-items:center; justify-content:center; min-height:54px; padding:0 16px;
+      background:linear-gradient(180deg,#f7fbff 0%,#edf5ff 100%); border:1px dashed #7da9e6; border-radius:16px;
+      color:#2158b5; font-size:27px; font-weight:800; letter-spacing:7px; box-shadow: inset 0 1px 0 rgba(255,255,255,.88);
+    }
+    #login-overlay-screen .captcha-display-zone::after{
+      background:linear-gradient(135deg, transparent 46%, rgba(81,128,210,.14) 46%, rgba(81,128,210,.14) 54%, transparent 54%);
+      background-size:12px 12px;
+    }
+    #login-overlay-screen .login-inline-options{
+      display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px; font-size:14px;
+    }
+    #login-overlay-screen .remember-option{
+      display:flex; align-items:center; gap:10px; color:#1b335a; cursor:pointer; user-select:none; font-weight:500;
+    }
+    #login-overlay-screen .remember-option input{width:16px; height:16px; accent-color:#1f63cc; cursor:pointer;}
+    #login-overlay-screen .forgot-password-link a{color:#215fbe; text-decoration:none; font-weight:700;}
+    #login-overlay-screen .forgot-password-link a:hover{text-decoration:underline;}
+    #login-overlay-screen #login-error-msg{
+      min-height:18px; margin-bottom:14px !important; padding:0 2px; text-align:left !important;
+    }
+    #login-overlay-screen .login-action-buttons-group{gap:10px;}
+    #login-overlay-screen .btn-vnpt-standard.btn-blue-primary{
+      border-radius:16px; background:linear-gradient(135deg,#1e68d4 0%,#144cb0 100%);
+      padding:15px 16px; font-size:14px; letter-spacing:.3px; display:flex; align-items:center; justify-content:center; gap:10px;
+      box-shadow:0 16px 28px rgba(20,76,176,.26);
+    }
+    #login-overlay-screen .btn-vnpt-standard.btn-blue-primary:hover{
+      transform:translateY(-1px); background:linear-gradient(135deg,#195fc2 0%,#0f4198 100%);
+    }
+    #login-overlay-screen .btn-vnpt-standard:disabled{opacity:.72; cursor:wait; transform:none;}
+    #login-overlay-screen .login-note{
+      margin-top:16px; display:flex; gap:10px; align-items:flex-start; font-size:12px; line-height:1.65; color:#667892;
+      background:#f7faff; border:1px solid #e3edf9; border-radius:14px; padding:12px 14px;
+    }
+    #login-overlay-screen .login-note i{color:#2d6fd6; margin-top:1px;}
+    #login-overlay-screen .security-badge-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+    #login-overlay-screen .security-badge-row span{
+      padding:9px 12px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+      color:#d7e6ff; font-size:12px; font-weight:600;
+    }
+    #login-overlay-screen .vnpt-copyright-footer{
+      position:absolute; bottom:18px; left:50%; transform:translateX(-50%); color:#a9bfdc; font-size:11px; opacity:.82;
+      white-space:nowrap; text-align:center;
+    }
+    @media(max-width:980px){
+      #login-overlay-screen .login-container-split{gap:38px;}
+      #login-overlay-screen .login-left-brand h1{font-size:38px;}
+      #login-overlay-screen .login-box{width:430px; padding:32px 28px 28px;}
+    }
+    @media(max-width:760px){
+      #login-overlay-screen{padding:20px 14px 64px; align-items:flex-start;}
+      #login-overlay-screen .login-container-split{flex-direction:column; gap:22px; justify-content:center;}
+      #login-overlay-screen .login-left-brand{align-items:center; text-align:center; max-width:100%;}
+      #login-overlay-screen .login-left-brand h1{font-size:28px; margin-bottom:12px;}
+      #login-overlay-screen .login-brand-description{margin-bottom:18px;}
+      #login-overlay-screen .login-brand-features{display:none;}
+      #login-overlay-screen .security-badge-row{justify-content:center;}
+      #login-overlay-screen .login-box{width:min(460px, calc(100vw - 28px)); padding:28px 22px 24px; border-radius:24px;}
+      #login-overlay-screen .login-inline-options{flex-direction:column; align-items:flex-start; gap:10px;}
+      #login-overlay-screen .captcha-row-layout{flex-direction:column;}
+      #login-overlay-screen .captcha-display-zone{letter-spacing:6px;}
+      #login-overlay-screen .vnpt-copyright-footer{font-size:10px; white-space:normal; width:90%;}
+    }
+    @media(max-height:700px) and (min-width:761px){
+      #login-overlay-screen{align-items:flex-start;}
+      #login-overlay-screen .login-brand-features{gap:10px;}
+      #login-overlay-screen .login-brand-features div{padding:12px 14px;}
+    }
+
+
+/* DTA Premium sign-in v4: visual-only layer */
+#login-overlay-screen{background:radial-gradient(ellipse 60% 55% at 11% 6%,#153d74 0%,transparent 78%),radial-gradient(ellipse 45% 40% at 85% 100%,#11365f 0%,transparent 75%),#071529; padding:38px 26px 60px; }
+#login-overlay-screen::before{background-image:linear-gradient(rgba(163,200,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(163,200,255,.045) 1px,transparent 1px);background-size:46px 46px;opacity:1;mask-image:linear-gradient(110deg,#000,transparent 85%)}
+#login-overlay-screen::after{left:18%;top:20%;width:560px;height:560px;background:radial-gradient(circle,rgba(38,142,235,.13),transparent 69%);filter:blur(36px)}
+#login-overlay-screen .login-container-split{width:1200px;gap:88px;}
+#login-overlay-screen .login-left-brand{max-width:555px;}
+#login-overlay-screen .login-brand-symbol{border:0; background:transparent;padding:0; box-shadow:none; margin-bottom:71px; font-size:14px;letter-spacing:2.7px;}
+#login-overlay-screen .login-brand-symbol i{width:46px;height:46px;display:grid;place-items:center;background:linear-gradient(145deg,#2c83e9,#0b4baf);border-radius:14px;color:white;font-size:20px;box-shadow:0 11px 30px #00142d75;}
+#login-overlay-screen .login-brand-kicker{font-size:11px;letter-spacing:2.5px;font-weight:750;text-transform:uppercase;color:#77c7f0;}
+#login-overlay-screen .login-brand-kicker .live-dot{width:6px;height:6px;background:#5cddc3;box-shadow:0 0 0 5px #5cddc31c;}
+#login-overlay-screen .login-left-brand h1{font-size:clamp(38px,4.3vw,61px);letter-spacing:-2.35px;line-height:1.14;margin:0 0 24px;color:#fff;}
+#login-overlay-screen .login-left-brand h1 span{background:linear-gradient(90deg,#65d7fa,#a7afff);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+#login-overlay-screen .login-brand-description{max-width:480px;font-size:15px;color:#acbdd6;line-height:1.9;margin:0 0 33px;}
+#login-overlay-screen .login-brand-features{gap:12px;}
+#login-overlay-screen .login-brand-features div{background:rgba(255,255,255,.036);border:1px solid #ffffff13;padding:13px 15px;border-radius:14px;box-shadow:none;}
+#login-overlay-screen .login-brand-features i{width:36px;height:36px;border-radius:11px;color:#86dbff;background:#143963;box-shadow:none;font-size:15px;}
+#login-overlay-screen .login-brand-features span{font-size:13px;color:#d4e0f2;}
+#login-overlay-screen .security-badge-row{gap:8px;margin-top:24px;}
+#login-overlay-screen .security-badge-row span{font-size:11px;padding:7px 11px;background:#ffffff06;color:#9fb6d3;border-color:#ffffff12;}
+#login-overlay-screen .login-box{width:469px; padding:41px 39px 35px; border-radius:25px; background:#fff; border:1px solid #ffffff; box-shadow:0 36px 80px #010918a8,0 10px 22px #06182a38;}
+#login-overlay-screen .login-box::before{height:4px;background:linear-gradient(90deg,#2b79e2,#58cce9,#55d2b1);}
+#login-overlay-screen .login-card-logo{width:56px;height:56px;border-radius:16px;margin-bottom:24px;font-size:24px;background:linear-gradient(145deg,#206dde,#08479f);box-shadow:0 14px 28px #1856b73e;}
+#login-overlay-screen .login-box h2{font-size:26px;line-height:1.2;font-weight:800;letter-spacing:-.9px;margin-bottom:9px;color:#0e2140;}
+#login-overlay-screen .login-box p.subtitle{font-size:13px;margin-bottom:30px;color:#75869f;}
+#login-overlay-screen .login-field-label{font-size:12px;letter-spacing:.1px;margin-bottom:8px;color:#233b60;}
+#login-overlay-screen .input-group-modern{min-height:52px;background:#f7f9fd;border-color:#e2e9f2;border-radius:12px;margin-bottom:20px;}
+#login-overlay-screen .input-group-modern:focus-within{background:white;border-color:#3389ec;box-shadow:0 0 0 3px #3389ec18;}
+#login-overlay-screen .input-group-modern input{font-size:13px;}
+#login-overlay-screen .input-addon-icon{color:#8096b4;}
+#login-overlay-screen .captcha-display-zone{min-height:52px;border-radius:12px;background:#eff6ff;color:#1d5bad;letter-spacing:5px;border:1px dashed #91b6e7;font-size:23px;}
+#login-overlay-screen .captcha-row-layout{margin-bottom:19px;}
+#login-overlay-screen .login-inline-options{margin-bottom:18px;font-size:12px;}
+#login-overlay-screen .remember-option{font-size:12px;}
+#login-overlay-screen .forgot-password-link a{font-size:12px;}
+#login-overlay-screen .btn-vnpt-standard.btn-blue-primary{border-radius:12px;padding:16px;font-size:13px;letter-spacing:.5px;box-shadow:0 13px 25px #1451b02f;background:linear-gradient(105deg,#1765d5,#114ea9);}
+#login-overlay-screen .login-note{margin-top:18px;background:#f8faff;border-radius:12px;border-color:#e9edf5;font-size:11px;padding:12px;}
+#login-overlay-screen .vnpt-copyright-footer{bottom:17px;color:#8298b6;font-size:10px;letter-spacing:1.6px;}
+@media(max-width:980px){#login-overlay-screen .login-container-split{gap:38px}#login-overlay-screen .login-brand-symbol{margin-bottom:34px}#login-overlay-screen .login-left-brand h1{font-size:39px}#login-overlay-screen .login-box{padding:32px 28px;width:425px;}}
+@media(max-width:760px){#login-overlay-screen{padding:19px 15px 57px}#login-overlay-screen .login-container-split{gap:20px}#login-overlay-screen .login-brand-symbol{margin-bottom:14px}#login-overlay-screen .login-left-brand h1{font-size:30px;letter-spacing:-1px;margin-bottom:10px}#login-overlay-screen .login-brand-kicker{font-size:10px}#login-overlay-screen .login-brand-description{display:none}#login-overlay-screen .security-badge-row{display:none}#login-overlay-screen .login-box{width:min(469px,calc(100vw - 30px));padding:27px 23px 23px}#login-overlay-screen .login-box p.subtitle{margin-bottom:24px}#login-overlay-screen .captcha-row-layout{flex-direction:row}#login-overlay-screen .captcha-display-zone{padding:0 10px;letter-spacing:3px;font-size:19px;min-width:105px}#login-overlay-screen .login-brand-features{display:none}}
+@media(max-width:410px){#login-overlay-screen .captcha-row-layout{flex-direction:column}#login-overlay-screen .captcha-display-zone{min-height:48px}#login-overlay-screen .login-inline-options{gap:10px}}
+@media(prefers-reduced-motion:reduce){#login-overlay-screen *,#login-overlay-screen *::before,#login-overlay-screen *::after{animation:none!important;transition:none!important}}
+
+  
+/* DTA V5 — Premium responsive workspace */
+#main-system-ui{background:linear-gradient(135deg,#f4f8ff,#f8fafd);min-height:100vh}
+#main-system-ui .banner{background:linear-gradient(115deg,#0b2145,#194b94 67%,#256bd1);border-radius:23px;padding:31px 34px;box-shadow:0 18px 44px #0d347524}
+#main-system-ui .sidebar{border-radius:22px;background:#fff;border:1px solid #e1e9f5;box-shadow:0 12px 36px #0c32630d}
+#main-system-ui .card,#main-system-ui .filter-panel,#main-system-ui .table-container{border-radius:18px;box-shadow:0 8px 26px #123d700b}
+#main-system-ui .controls-row{flex-wrap:wrap}
+#main-system-ui button,#main-system-ui select,#main-system-ui input{max-width:100%}
+@media(max-width:980px){#main-system-ui .main-layout{flex-direction:column;gap:18px}#main-system-ui .sidebar{width:100%;min-width:0;padding:17px}#main-system-ui .main-content{width:100%}#main-system-ui .banner{flex-wrap:wrap;gap:18px}#main-system-ui .stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#main-system-ui .container{padding:12px}#main-system-ui .banner{padding:22px 18px;border-radius:18px}#main-system-ui .banner h1{font-size:21px;line-height:1.35}#main-system-ui .banner p{font-size:13px}#main-system-ui .controls-row{display:grid;grid-template-columns:1fr;gap:9px}#main-system-ui .controls-row button{width:100%;justify-content:center}#main-system-ui .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#main-system-ui .stats .card{padding:12px}#main-system-ui .main-layout{gap:12px}#main-system-ui .sidebar{padding:12px}#main-system-ui .form-row{flex-direction:column;gap:0}#main-system-ui .modal{width:98%;max-height:96dvh}#main-system-ui .modal-body{padding:18px}#main-system-ui .pagination-controls{flex-wrap:wrap;gap:10px}#main-system-ui .table-responsive,#main-system-ui .table-wrapper{overflow-x:auto}}
+</style>
+</head>
+<body>
+  <div id="login-overlay-screen">
+    <div class="login-container-split">
+      <div class="login-left-brand">
+        <div class="login-brand-symbol"><i class="fa-solid fa-layer-group"></i><span>DTA WORKSPACE</span></div>
+        <div class="login-brand-kicker"><span class="live-dot"></span> WORKSPACE / MANAGEMENT PLATFORM</div>
+        <h1>Quản trị công việc.<br><span>Rõ người, rõ việc,<br>rõ tiến độ.</span></h1>
+        <p class="login-brand-description">Hệ thống điều hành tập trung, giúp phân công nhiệm vụ, giám sát tiến độ và đánh giá kết quả trên một không gian làm việc thống nhất.</p>
+        <div class="login-brand-features">
+          <div><i class="fa-solid fa-list-check"></i><span>Giao việc rõ ràng, bám sát thời hạn và trạng thái xử lý.</span></div>
+          <div><i class="fa-solid fa-user-shield"></i><span>Phân quyền theo vai trò và theo từng cá nhân được giao việc.</span></div>
+          <div><i class="fa-solid fa-chart-simple"></i><span>Thống kê, KPI và báo cáo trực quan để theo dõi hiệu suất.</span></div>
+        </div>
+        <div class="security-badge-row">
+          <span><i class="fa-solid fa-shield-halved"></i> Truy cập bảo mật</span>
+          <span><i class="fa-solid fa-bolt"></i> Theo dõi thời gian thực</span>
+          <span><i class="fa-solid fa-laptop-code"></i> Tối ưu mọi thiết bị</span>
+        </div>
+      </div>
+      <div>
+        <div class="login-box" id="login-form-sub-panel">
+          <div class="login-card-logo"><i class="fa-solid fa-shield-halved"></i></div>
+          <h2>Đăng nhập</h2>
+          <p class="subtitle">DTA Workspace · Hệ thống quản lý công việc</p>
+          <form id="systemLoginForm" onsubmit="event.preventDefault(); executeLoginAction();">
+            <label class="login-field-label" for="loginUsername">Tài khoản</label>
+            <div class="input-group-modern">
+              <span class="input-addon-icon"><i class="fa fa-user"></i></span>
+              <input type="text" id="loginUsername" required placeholder="Nhập tên tài khoản" autocomplete="username">
+            </div>
+            <label class="login-field-label" for="loginPassword">Mật khẩu</label>
+            <div class="input-group-modern password-field">
+              <span class="input-addon-icon"><i class="fa fa-lock"></i></span>
+              <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu" autocomplete="current-password">
+              <button type="button" class="password-toggle" id="passwordVisibilityToggle" onclick="toggleLoginPassword()" aria-label="Hiện mật khẩu" title="Hiện/ẩn mật khẩu"><i class="fa-regular fa-eye"></i></button>
+            </div>
+            <label class="login-field-label" for="loginCaptchaInput">Mã xác nhận</label>
+            <div class="captcha-row-layout">
+              <div class="input-group-modern">
+                <span class="input-addon-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                <input type="text" id="loginCaptchaInput" required placeholder="Nhập mã xác nhận">
+              </div>
+              <div class="captcha-display-zone" id="captchaBox" onclick="generateCaptchaEngine()" title="Bấm để đổi mã khác">00000</div>
+            </div>
+            <div class="login-inline-options">
+              <label class="remember-option">
+                <input type="checkbox" id="rememberMe"> Nhớ mật khẩu
+              </label>
+              <div class="forgot-password-link">
+                <a href="#" onclick="alert('Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.'); return false;">Quên mật khẩu?</a>
+              </div>
+            </div>
+            <div id="login-error-msg" style="color:var(--danger); font-size:13px; font-weight:600; display:none;"></div>
+            <div class="login-action-buttons-group">
+              <button type="submit" class="btn-vnpt-standard btn-blue-primary" id="loginBtnSubmit">Truy cập hệ thống <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="login-note"><i class="fa-solid fa-circle-info"></i><span>Không chia sẻ mật khẩu. Liên hệ quản trị viên khi cần hỗ trợ tài khoản.</span></div>
+          </form>
+        </div>
+        <div class="login-box" id="force-change-password-panel" style="display: none;">
+          <div class="login-card-logo"><i class="fa-solid fa-key"></i></div>
+          <h2>Khởi tạo bảo mật</h2>
+          <p class="subtitle">Thiết lập mật khẩu mới trong lần đăng nhập đầu tiên để tiếp tục sử dụng hệ thống.</p>
+          <form id="forceChangePassForm" onsubmit="event.preventDefault(); executeForceChangePassword();">
+            <label class="login-field-label" for="newPassInput">Mật khẩu mới</label>
+            <div class="input-group-modern password-field">
+              <span class="input-addon-icon"><i class="fa fa-key"></i></span>
+              <input type="password" id="newPassInput" required placeholder="Nhập mật khẩu mới..." minlength="4">
+            </div>
+            <label class="login-field-label" for="confirmNewPassInput">Xác nhận mật khẩu</label>
+            <div class="input-group-modern password-field">
+              <span class="input-addon-icon"><i class="fa fa-check-double"></i></span>
+              <input type="password" id="confirmNewPassInput" required placeholder="Xác nhận lại mật khẩu...">
+            </div>
+            <div id="change-pass-error-msg" style="color:var(--danger); font-size:13px; font-weight:600; margin-bottom:12px; display:none;"></div>
+            <button type="submit" class="btn-vnpt-standard btn-blue-primary" id="changePassBtnSubmit"><i class="fa fa-save"></i> Cập nhật & Kích hoạt</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="vnpt-copyright-footer">DTA WORKSPACE · HỆ THỐNG QUẢN LÝ CÔNG VIỆC</div>
+  </div>
+
+  <div class="container" id="main-system-ui">
+    <div class="banner">
+      <div class="left">
+        <h1><i class="fa-solid fa-layer-group"></i> HỆ THỐNG QUẢN LÝ CÔNG VIỆC</h1>
+        <p>Theo dõi tiến độ chỉ đạo, điều hành văn bản chỉ thị và thẩm định chất lượng tự động.</p>
+      </div>
+      <div class="right" id="user-info-area"></div>
+    </div>
+    <div class="main-layout">
+      <div class="sidebar">
+        <div class="menu-group">
+          <div class="menu-title"><i class="fa fa-tasks"></i> Cơ cấu cơ quan</div>
+          <ul class="menu-list" id="dynamic-dept-menu"></ul>
+        </div>
+        <div class="menu-group">
+          <div class="menu-title"><i class="fa fa-cog"></i> Cấu hình</div>
+          <ul class="menu-list">
+            <li class="menu-item active" id="menu-all-tasks" onclick="clearFilters()"><i class="fa fa-sync-alt"></i> Tất cả công việc</li>
+            <li class="menu-item" id="admin-management-link" style="display:none" onclick="openAdminOverlay()"><i class="fa fa-users-gear"></i> Quản lý phòng ban, tài khoản</li>
+       <li class="menu-item" onclick="openStatsModal()"><i class="fa-solid fa-table-list"></i> Thống kê</li>
+            <li class="menu-item" onclick="openKpiModal()"><i class="fa-solid fa-award"></i> Chấm điểm KPI</li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="controls-row">
+          <button class="btn btn-primary" id="btn-create-task" onclick="openPopup()"><i class="fa fa-plus"></i> Tạo công việc mới</button>
+          <button class="btn btn-success" onclick="exportFilteredToExcel()"><i class="fa-solid fa-file-excel"></i> Xuất dữ liệu Excel</button>
+          <button class="btn btn-info" id="btn-refresh-data" onclick="loadSystemDataInBackground()"><i class="fa-solid fa-arrows-rotate"></i> Tải lại dữ liệu</button>
+        </div>
+        <div class="stats">
+          <div class="card active" id="card-total" onclick="filterByQuickStatus('')">
+            <div class="stat-row">
+              <div class="icon-sq color-primary"><i class="fa-solid fa-folder-open"></i></div>
+              <div><div class="val" id="st-total">0</div><div class="label">Tổng số nhiệm vụ</div></div>
+            </div>
+          </div>
+          <div class="card" id="card-pending" onclick="filterByQuickStatus('Chờ thẩm định')">
+            <div class="stat-row">
+              <div class="icon-sq color-warning"><i class="fa-solid fa-clock-rotate-left"></i></div>
+              <div><div class="val" id="st-pending">0</div><div class="label">Chờ thẩm định</div></div>
+            </div>
+          </div>
+          <div class="card" id="card-done" onclick="filterByQuickStatus('Hoàn thành')">
+            <div class="stat-row">
+              <div class="icon-sq color-success"><i class="fa-solid fa-circle-check"></i></div>
+              <div><div class="val" id="st-done">0</div><div class="label">Nhiệm vụ hoàn thành</div></div>
+            </div>
+          </div>
+          <div class="card" id="card-overdue" onclick="filterByQuickStatus('Quá hạn')">
+            <div class="stat-row">
+              <div class="icon-sq color-danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div><div class="val" id="st-overdue">0</div><div class="label">Nhiệm vụ quá hạn</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-panel">
+          <div class="filter-section-title"><i class="fa fa-search"></i> Tra cứu nhanh dữ liệu</div>
+          <div class="filter-row">
+            <div class="filter-item">
+              <i class="fa fa-keyboard"></i>
+              <input type="text" id="searchTask" placeholder="Tìm theo Số VB, Tên CV, Cơ quan chỉ đạo..." oninput="applyFilters()">
+            </div>
+            <div class="filter-item">
+              <i class="fa fa-building"></i>
+              <select id="filterDept" onchange="onFilterDeptChange()">
+                <option value="">-- Tất cả Khối phòng ban --</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <i class="fa fa-user"></i>
+              <select id="filterUser" onchange="applyFilters()">
+                <option value="">-- Tất cả Cán bộ phụ trách --</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-section-title" style="margin-top: 18px;"><i class="fa fa-filter"></i> Lọc sâu thuộc tính phân loại</div>
+          <div class="filter-row">
+            <div class="filter-item">
+              <i class="fa fa-toggle-on"></i>
+              <select id="filterStatus" onchange="applyFilters()">
+                <option value="">-- Tất cả Trạng thái tiến độ --</option>
+                <option value="Đang xử lý">Đang xử lý</option>
+                <option value="Sắp hết hạn 24 giờ">Sắp hết hạn 24 giờ</option>
+                <option value="Sắp hết hạn 12 giờ">Sắp hết hạn 12 giờ</option>
+                <option value="Quá hạn">Quá hạn</option>
+                <option value="Chờ thẩm định">Chờ thẩm định</option>
+                <option value="Yêu cầu chỉnh sửa">Yêu cầu chỉnh sửa</option>
+                <option value="Hoàn thành">Hoàn thành</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <i class="fa fa-tags"></i>
+              <select id="filterNhomCV" onchange="applyFilters()">
+                <option value="">-- Tất cả Nhóm công việc --</option>
+                <option value="Nhóm 1">Nhóm 1</option>
+                <option value="Nhóm 2">Nhóm 2</option>
+                <option value="Nhóm 3">Nhóm 3</option>
+                <option value="Nhóm 4">Nhóm 4</option>
+                <option value="Nhóm 5">Nhóm 5</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <i class="fa fa-star"></i>
+              <select id="filterDanhGia" onchange="applyFilters()">
+                <option value="">-- Đánh giá chất lượng báo cáo --</option>
+                <option value="Tốt">Tốt</option>
+                <option value="Khá">Khá</option>
+                <option value="Đạt">Đạt</option>
+                <option value="Chưa Đạt">Chưa Đạt</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <i class="fa fa-arrow-up-1-9"></i>
+              <select id="filterDiemSo" onchange="applyFilters()">
+                <option value="">-- Thang điểm công việc --</option>
+                <option value="high">Nhiệm vụ trọng tâm (>= 100 điểm)</option>
+                <option value="low">Nhiệm vụ thường nhật (&lt; 100 điểm)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <div class="loading-overlay" id="tableLoading">
+            <div class="loading-spinner"></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th class="col-stt">STT</th>
+                <th class="col-sovb">Số VB</th>
+                <th class="col-coquan align-left">Cơ quan BH</th>
+                <th class="col-tencongviec align-left">Tên công việc / Nội dung chỉ đạo chỉ thị</th>
+                <th class="col-phutrach align-left">CQ Phụ trách</th>
+                <th class="col-canhan align-left">Cá nhân phụ trách</th>
+                <th class="col-date">Ngày giao</th>
+                <th class="col-date">Hạn xử lý</th>
+                <th class="col-date">Ngày hoàn thành</th>
+                <th class="col-status">Trạng thái</th>
+                <th class="col-nhomcv">Nhóm CV</th>
+                <th class="col-diem">Điểm số</th>
+                <th class="col-danhgia">Đánh giá chất lượng</th>
+                <th class="col-vbbh">Số VB đã BH</th>
+                <th class="col-action">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="taskTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination-controls">
+          <div class="page-info" id="pageInfo">Đang đồng bộ dữ liệu...</div>
+          <div class="page-buttons" id="pageButtons"></div>
+        </div>
+      </div>
+    </div>
+    <footer>&copy; 2026 DTA Workspace · Phát triển bởi NGUYỄN TRUNG KIÊN · Liên hệ: 0948.48.68.98</footer>
+  </div>
+
+  <div class="overlay" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Thiết lập dữ liệu nhiệm vụ mới</h3>
+      </div>
+      <div class="modal-body">
+        <div id="form-security-warning" style="display:none; background:#fee2e2; border:1px solid #fca5a5; color:#b91c1c; padding:12px; border-radius:8px; font-weight:600; font-size:14px; margin-bottom:18px; text-align:center;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Quyền hạn: Bạn không thể gửi báo cáo cho công việc của cán bộ khác!
+        </div>
+        <form id="taskForm" onsubmit="event.preventDefault(); saveTaskData();">
+          <input type="hidden" id="taskId">
+          <div class="form-row">
+            <div class="col input-group">
+              <label>Số văn bản <span style="color:red">*</span></label>
+              <input type="text" id="soVB" required placeholder="Ví dụ: 124/UBND-TH">
+            </div>
+            <div class="col input-group">
+              <label>Cơ quan ban hành <span style="color:red">*</span></label>
+              <input type="text" id="coQuan" required placeholder="Ví dụ: Văn phòng UBND tỉnh">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Tên công việc / Nội dung chỉ đạo <span style="color:red">*</span></label>
+            <input type="text" id="tenCongViec" required placeholder="Nhập chi tiết nội dung văn bản chỉ đạo của lãnh đạo...">
+          </div>
+          <div class="form-row">
+            <div class="col input-group">
+              <label>CQ Phụ trách (Phòng ban) <span style="color:red">*</span></label>
+              <select id="cqPhuTrach" required onchange="onFormDeptChange()">
+                <option value="">-- Chọn phòng ban phụ trách --</option>
+              </select>
+            </div>
+            <div class="col input-group">
+              <label>Cá nhân phụ trách xử lý</label>
+              <select id="nguoiPhuTrach">
+                <option value="">-- Giao chung cho phòng ban --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col input-group">
+              <label>Ngày giao việc <span style="color:red">*</span></label>
+              <input type="date" id="ngayGiao" required>
+            </div>
+            <div class="col input-group">
+              <label>Hạn chỉ định xử lý <span style="color:red">*</span></label>
+              <input type="date" id="hanXuLy" required>
+            </div>
+            <div class="col input-group">
+              <label>Ngày hoàn thành báo cáo thực tế</label>
+              <input type="date" id="ngayHoanThanh">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col input-group">
+              <label>Nhóm lĩnh vực công việc</label>
+              <select id="nhomCongViec" onchange="updateScoreLimit()">
+                <option value="">-- Chọn nhóm phân loại --</option>
+                <option value="Nhóm 1">Nhóm 1</option>
+                <option value="Nhóm 2">Nhóm 2</option>
+                <option value="Nhóm 3">Nhóm 3</option>
+                <option value="Nhóm 4">Nhóm 4</option>
+                <option value="Nhóm 5">Nhóm 5</option>
+              </select>
+            </div>
+            <div class="col input-group">
+              <label id="labelChamDiem">Chấm điểm giới hạn (0 - 500)</label>
+              <input type="number" id="chamDiem" min="0" max="500" placeholder="Chọn nhóm để xem giới hạn điểm ...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col input-group" id="container-danhgia">
+              <label>Đánh giá thẩm định chất lượng báo cáo</label>
+              <select id="danhGiaBaoCao">
+                <option value="">-- Chưa tiến hành đánh giá --</option>
+                <option value="Tốt">Tốt</option>
+                <option value="Khá">Khá</option>
+                <option value="Đạt">Đạt</option>
+                <option value="Chưa Đạt">Chưa Đạt</option>
+              </select>
+            </div>
+            <div class="col input-group">
+              <label>Số văn bản hoàn thành đã ban hành sản phẩm</label>
+              <input type="text" id="soVBBanHanh" placeholder="Nhập số văn bản phúc đáp hoàn thành...">
+            </div>
+          </div>
+          <div class="input-group" id="container-trangthai">
+            <label>Trạng thái tiến độ thực hiện</label>
+            <select id="trangThai">
+              <option value="Đang xử lý">Đang xử lý</option>
+              <option value="Chờ thẩm định">Chờ thẩm định</option>
+              <option value="Yêu cầu chỉnh sửa">Yêu cầu chỉnh sửa</option>
+              <option value="Hoàn thành">Hoàn thành</option>
+            </select>
+          </div>
+          <div class="ft-right">
+            <button type="button" class="btn btn-outline" onclick="closePopup()">Hủy bỏ</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-form">Lưu thông tin</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="statsModal">
+    <div class="modal" style="width:1050px; max-width:98%;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size:20px; font-weight:700; color:var(--text-dark);"><i class="fa-solid fa-table-list" style="color:var(--success); margin-right:10px;"></i> Bảng thống kê công việc chi tiết</h3>
+        <i class="fa-solid fa-xmark" onclick="closeStatsModal()" style="cursor:pointer; font-size:20px; color:var(--text-muted); transition:0.2s;"></i>
+      </div>
+      <div class="modal-body" style="padding:28px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:22px; flex-wrap: wrap; gap: 15px;">
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-primary" id="btnStatsTabDept" onclick="switchStatsTab('dept')"><i class="fa-solid fa-building"></i> Theo phòng ban</button>
+            <button class="btn btn-outline" id="btnStatsTabUser" onclick="switchStatsTab('user')"><i class="fa-solid fa-user"></i> Theo cá nhân</button>
+          </div>
+          <button class="btn btn-success" onclick="exportStatsToExcel()"><i class="fa-solid fa-file-excel"></i> Xuất Excel Thống Kê</button>
+        </div>
+        <div id="statsUserFilterContainer" style="display:none; margin-bottom: 22px; background: #fff; padding: 14px; border-radius: 8px; border: 1px dashed var(--border-color);">
+          <label style="font-size: 13px; font-weight:600; color:var(--text-dark); display:block; margin-bottom:8px;">Lọc theo phòng ban:</label>
+          <select id="statsDeptFilter" onchange="renderDetailedStats()" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); font-size:14px; outline:none; font-weight:500;">
+            <option value="">-- Tất cả Phòng ban --</option>
+          </select>
+        </div>
+        <div class="stats-table-wrapper" style="max-height:50vh; overflow-y:auto; overflow-x:auto;">
+          <table class="stats-table" style="min-width: 1150px;">
+            <thead style="position: sticky; top: 0; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+              <tr>
+                <th rowspan="2" style="text-align: left; min-width: 180px;">Đối tượng phụ trách</th>
+                <th rowspan="2" style="width: 80px;">Tổng CV</th>
+                <th colspan="4" style="border-bottom: 1px solid #cbd5e1;">Tiến độ xử lý</th>
+                <th colspan="5" style="border-bottom: 1px solid #cbd5e1;">Phân loại theo Nhóm</th>
+                <th rowspan="2" style="color: var(--danger);">Tổng điểm</th>
+              </tr>
+              <tr>
+                <th class="th-sub">Hoàn thành</th><th class="th-sub">Đang xử lý</th><th class="th-sub">Chờ duyệt</th><th class="th-sub">Quá hạn</th>
+                <th class="th-sub">Nhóm 1</th><th class="th-sub">Nhóm 2</th><th class="th-sub">Nhóm 3</th><th class="th-sub">Nhóm 4</th><th class="th-sub">Nhóm 5</th>
+              </tr>
+            </thead>
+            <tbody id="statsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="ft-right" style="display:flex; justify-content:flex-end; margin-top:25px; padding-top:20px; border-top:1px solid var(--border-color);">
+          <button type="button" class="btn btn-outline" onclick="closeStatsModal()">Đóng bảng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="kpiModal">
+    <div class="modal" style="width:1300px; max-width:98%;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; background: #fefce8;">
+        <h3 style="margin:0; font-size:20px; font-weight:700; color:var(--text-dark);"><i class="fa-solid fa-award" style="color:#f59e0b; margin-right:10px;"></i> Bảng Đánh Giá & Chấm Điểm KPI Cán Bộ</h3>
+        <i class="fa-solid fa-xmark" onclick="closeKpiModal()" style="cursor:pointer; font-size:20px; color:var(--text-muted); transition:0.2s;"></i>
+      </div>
+      <div class="modal-body" style="padding:28px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:22px; flex-wrap: wrap; gap: 15px;">
+          <div style="flex:1; max-width: 400px;">
+            <label style="font-size: 13px; font-weight:600; color:var(--text-dark); display:block; margin-bottom:8px;">Lọc đánh giá theo phòng ban:</label>
+            <select id="kpiDeptFilter" onchange="renderKpiTable()" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); font-size:14px; outline:none; font-weight:500;">
+              <option value="">-- Toàn bộ cơ quan --</option>
+            </select>
+          </div>
+          <button class="btn btn-success" onclick="exportKpiToExcel()"><i class="fa-solid fa-file-excel"></i> Xuất Báo Cáo KPI</button>
+        </div>
+        <div class="stats-table-wrapper" style="max-height:55vh; overflow-y:auto; overflow-x:auto;">
+          <table class="stats-table" style="min-width: 1450px;">
+            <thead style="position: sticky; top: 0; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+              <tr>
+                <th rowspan="2" style="text-align: left; min-width: 180px;">Tên cán bộ nhân sự</th>
+                <th rowspan="2" style="text-align: left;">Trực thuộc phòng ban</th>
+                <th rowspan="2">Tổng CV</th>
+                <th colspan="3" style="border-bottom: 1px solid #cbd5e1; background: #e0f2fe;">Tiến độ xử lý</th>
+                <th colspan="2" style="border-bottom: 1px solid #cbd5e1;">Nhóm 1</th>
+                <th colspan="2" style="border-bottom: 1px solid #cbd5e1;">Nhóm 2</th>
+                <th colspan="2" style="border-bottom: 1px solid #cbd5e1;">Nhóm 3</th>
+                <th colspan="2" style="border-bottom: 1px solid #cbd5e1;">Nhóm 4</th>
+                <th colspan="2" style="border-bottom: 1px solid #cbd5e1;">Nhóm 5</th>
+                <th rowspan="2" style="color: #4338ca; font-size: 14px;">Tỷ lệ Hoàn thành</th>
+                <th rowspan="2">Đánh giá Xếp loại</th>
+              </tr>
+              <tr>
+                <th class="th-sub" style="background: #e0f2fe;">HT</th><th class="th-sub" style="background: #e0f2fe;">ĐXL</th><th class="th-sub" style="background: #e0f2fe;">QH</th>
+                <th class="th-sub">Số CV</th><th class="th-sub" style="color:#d97706;">% Nhóm 1</th>
+                <th class="th-sub">Số CV</th><th class="th-sub" style="color:#d97706;">% Nhóm 2</th>
+                <th class="th-sub">Số CV</th><th class="th-sub" style="color:#d97706;">% Nhóm 3</th>
+                <th class="th-sub">Số CV</th><th class="th-sub" style="color:#d97706;">% Nhóm 4</th>
+                <th class="th-sub">Số CV</th><th class="th-sub" style="color:#d97706;">% Nhóm 5</th>
+              </tr>
+            </thead>
+            <tbody id="kpiTableBody"></tbody>
+          </table>
+        </div>
+        <div class="ft-right" style="display:flex; justify-content:flex-end; margin-top:25px; padding-top:20px; border-top:1px solid var(--border-color);">
+          <button type="button" class="btn btn-outline" onclick="closeKpiModal()">Đóng bảng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="confirmModal">
+    <div class="modal" style="width:400px;">
+      <div class="modal-body" style="text-align:center; padding:35px 25px;">
+        <i class="fa fa-exclamation-circle" style="font-size:48px; color:var(--danger); margin-bottom:18px;"></i>
+        <h3>Xác nhận loại bỏ dữ liệu?</h3>
+        <p style="color:var(--text-muted); font-size:14px;">Hành động xóa sẽ được cập nhật đồng bộ cục bộ ngay lập tức.</p>
+        <div style="display:flex; justify-content:center; gap:14px; margin-top:24px;">
+          <button class="btn btn-outline" onclick="closeConfirm()">Hủy</button>
+          <button class="btn btn-primary" style="background:var(--danger-gradient);" onclick="handleDelete()">Đồng ý xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="alertModal">
+    <div class="modal" style="width:450px; border-top: 5px solid var(--vnpt-blue);">
+      <div class="modal-body" style="text-align:center; padding:35px 25px;">
+        <i class="fa-solid fa-circle-check" style="font-size:54px; color:var(--success); margin-bottom:18px;"></i>
+        <h3 style="margin-bottom: 12px; color: var(--text-dark);">Thông báo hệ thống</h3>
+        <p id="alertModalMessage" style="color:var(--text-muted); font-size:15px; line-height: 1.6; margin: 0 0 24px 0;"></p>
+        <div style="display:flex; justify-content:center;">
+          <button class="btn btn-primary" style="padding: 10px 35px;" onclick="closeAlertModal()">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastContainer"></div>
+
+  <script>
+
+    // DTA giao diện quản lý công việc trên Node.js.
+    async function exportFilteredToExcel(){
+      if(!currentFilteredTasks.length){showToast('Không có công việc để xuất');return;}
+      if(typeof ExcelJS==='undefined'||typeof saveAs==='undefined'){showToast('Không tải được thư viện xuất Excel. Kiểm tra kết nối Internet.');return;}
+      const wb=new ExcelJS.Workbook(), ws=wb.addWorksheet('Danh sách công việc');
+      const columns=[['soVB','Số văn bản'],['coQuan','Cơ quan'],['ten','Tên công việc'],['cqPhuTrach','Cơ quan phụ trách'],['nguoi','Cá nhân phụ trách'],['ngayGiao','Ngày giao'],['han','Hạn xử lý'],['ngayHoanThanh','Ngày hoàn thành'],['trangThai','Trạng thái'],['nhomCongViec','Nhóm công việc'],['chamDiem','Điểm'],['danhGiaBaoCao','Đánh giá'],['soVBBanHanh','Số VB đã ban hành']];
+      ws.columns=columns.map(([key,header])=>({key,header,width:key==='ten'?55:22}));
+      currentFilteredTasks.forEach(t=>ws.addRow(Object.fromEntries(columns.map(([k])=>[k,String(t[k]??'')]))));
+      ws.getRow(1).font={bold:true,color:{argb:'FFFFFFFF'}};
+      ws.getRow(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF2456BC'}};
+      ws.autoFilter={from:'A1',to:'M1'};ws.views=[{state:'frozen',ySplit:1}];
+      const buffer=await wb.xlsx.writeBuffer();saveAs(new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Danh_sach_cong_viec.xlsx');
+    }
+    function escapeHtml(x) { return String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    // Các hàm giao tiếp trực tiếp tới Node.js; không sử dụng google.script.run.
+    const API_TIMEOUT_MS = 20000;
+    async function apiCall(url, method='GET', body) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+      try {
+        const response = await fetch(url, {
+          method, credentials: 'same-origin',
+          headers: {'Content-Type': 'application/json'},
+          body: body === undefined ? undefined : JSON.stringify(body),
+          signal: controller.signal
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.msg || 'Máy chủ trả về lỗi ' + response.status);
+        return payload;
+      } catch (err) {
+        if (err.name === 'AbortError') throw new Error('Máy chủ không phản hồi sau 20 giây. Kiểm tra Terminal.');
+        throw err;
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+    function callServer(method, args, success, failure) {
+      const actions = {
+        authenticateUser: () => apiCall('/api/login', 'POST', {username: args[0], password: args[1]}),
+        getSystemData: () => apiCall('/api/data'),
+        changePasswordFirstTime: () => apiCall('/api/change-password', 'POST', {newPassword: args[1]}),
+        saveTask: () => apiCall('/api/tasks', 'POST', {task: args[0]}),
+        deleteTask: () => apiCall('/api/tasks/delete', 'POST', {id: args[0]})
+      };
+      Promise.resolve().then(() => {
+        if (!actions[method]) throw new Error('Chức năng không được hỗ trợ: ' + method);
+        return actions[method]();
+      }).then(result => success?.(result)).catch(err => {
+        if (failure) failure(err.message || String(err));
+        else showToast('Lỗi kết nối: ' + (err.message || String(err)));
+      });
+    }
+    // Bộ chuyển tiếp để giữ toàn bộ logic màn hình và xử lý công việc gốc.
+    // Mỗi bước trong chuỗi trả về runner có đủ phương thức API ở cuối chuỗi.
+    function serverRunner(success, failure) {
+      const runner = {
+        withSuccessHandler(cb) { return serverRunner(cb, failure); },
+        withFailureHandler(cb) { return serverRunner(success, cb); }
+      };
+      for (const method of ['authenticateUser', 'getSystemData', 'changePasswordFirstTime', 'saveTask', 'deleteTask']) {
+        runner[method] = (...args) => callServer(method, args, success, failure);
+      }
+      return runner;
+    }
+    // Proxy tương thích chỉ tồn tại trong dự án Node.js để không phải sửa UI gốc.
+    const google = {script: {get run() {return serverRunner();}}};
+
+    let allTasks = [];
+    let currentFilteredTasks = [];
+    let globalAssignees = {};
+    let deleteId = null;
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let currentUserSession = null;
+    let currentCaptchaValue = "";
+    let currentStatsTab = 'dept';
+    let quickFilterStatus = "";
+
+    window.onload = function() {
+      generateCaptchaEngine();
+      const savedUser = localStorage.getItem('dta_remembered_user');
+      const savedPass = null;
+      if (savedUser && savedPass) {
+        document.getElementById('loginUsername').value = savedUser;
+        document.getElementById('loginPassword').value = savedPass;
+        document.getElementById('rememberMe').checked = true;
+      }
+    };
+
+    function customAlert(message) {
+      document.getElementById('alertModalMessage').textContent = message;
+      document.getElementById('alertModal').classList.add('active');
+    }
+    function closeAlertModal() {
+      document.getElementById('alertModal').classList.remove('active');
+    }
+    function generateCaptchaEngine() {
+      const chars = "0123456789";
+      let result = "";
+      for (let i = 0; i < 5; i++) { result += chars.charAt(Math.floor(Math.random() * chars.length)); }
+      currentCaptchaValue = result;
+      document.getElementById("captchaBox").textContent = result;
+    }
+
+    function decorateTasks(tasksList) {
+      const now = new Date();
+      tasksList.forEach(task => {
+        let currentStatus = task.trangThai || "Đang xử lý";
+        if (currentStatus !== "Hoàn thành" && currentStatus !== "Chờ thẩm định" && task.han) {
+          const deadline = new Date(task.han + "T23:59:59");
+          const diffHours = (deadline - now) / (1000 * 60 * 60);
+          if (diffHours < 0) currentStatus = "Quá hạn";
+          else if (diffHours <= 12) currentStatus = "Sắp hết hạn 12 giờ";
+          else if (diffHours <= 24) currentStatus = "Sắp hết hạn 24 giờ";
+        }
+        task._computedStatus = currentStatus;
+        task._searchable = ((task.ten || '') + ' ' + (task.soVB || '') + ' ' + (task.coQuan || '')).toLowerCase();
+      });
+    }
+
+    // HÀM ĐĂNG NHẬP SIÊU TỐC - HIỂN THỊ MÀN HÌNH CHÍNH TRONG 0.05 GIÂY KHÔNG CHỜ TẢI SHEET
+    function toggleLoginPassword() {
+      const field = document.getElementById('loginPassword');
+      const toggle = document.getElementById('passwordVisibilityToggle');
+      if (!field || !toggle) return;
+      const showing = field.type === 'password';
+      field.type = showing ? 'text' : 'password';
+      toggle.setAttribute('aria-label', showing ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+      toggle.innerHTML = showing ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
+    }
+
+    function executeLoginAction() {
+      const user = document.getElementById('loginUsername').value;
+      const pass = document.getElementById('loginPassword').value;
+      const captchaInput = document.getElementById('loginCaptchaInput').value.trim();
+      const errBox = document.getElementById('login-error-msg');
+      const btn = document.getElementById('loginBtnSubmit');
+      errBox.style.display = 'none';
+      
+      if (captchaInput !== currentCaptchaValue) {
+        errBox.textContent = "Mã xác nhận Captcha không chính xác!";
+        errBox.style.display = 'block';
+        generateCaptchaEngine();
+        return;
+      }
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang đăng nhập...';
+      
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res.success) {
+            const rememberMeChecked = document.getElementById('rememberMe').checked;
+            if (rememberMeChecked) {
+              localStorage.setItem('dta_remembered_user', user);
+              // Không lưu mật khẩu dạng rõ trên trình duyệt.
+            } else {
+              localStorage.removeItem('dta_remembered_user');
+              localStorage.removeItem('dta_remembered_pass');
+            }
+            currentUserSession = res.user;
+            document.getElementById("admin-management-link").style.display = (res.user.role === "Admin" && res.user.department === "Tất cả") ? "flex" : "none";
+            if (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role)) {
+              document.getElementById('btn-create-task').style.display = 'inline-flex';
+            } else {
+              document.getElementById('btn-create-task').style.display = 'none';
+            }
+            if (res.requireChange) {
+              document.getElementById('login-form-sub-panel').style.display = 'none';
+              document.getElementById('force-change-password-panel').style.display = 'block';
+            } else {
+              // BIẾN MẤT MÀN HÌNH ĐĂNG NHẬP TỨC THÌ (PHẢN HỒI < 0.1 GIÂY)
+              document.getElementById('login-overlay-screen').style.display = 'none';
+              document.getElementById('main-system-ui').style.display = 'block';
+              renderUserHeader(res.user);
+              
+              // KÍCH HOẠT TIẾN TRÌNH TẢI DỮ LIỆU CHẠY NGẦM BẤT ĐỒNG BỘ
+              loadSystemDataInBackground();
+            }
+          } else {
+            errBox.textContent = res.msg;
+            errBox.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = 'Đăng nhập';
+            generateCaptchaEngine();
+          }
+        })
+        .withFailureHandler(err => {
+          errBox.textContent = "Không thể kết nối đến máy chủ: " + err;
+          errBox.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = 'Đăng nhập';
+          generateCaptchaEngine();
+        })
+        .authenticateUser(user, pass);
+    }
+
+    // LUỒNG TẢI DỮ LIỆU CHẠY NGẦM KHÔNG GÂY TREO TRÌNH DUYỆT (BACKGROUND FETCH)
+    function loadSystemDataInBackground() {
+      if (!currentUserSession) return;
+      const refreshBtn = document.getElementById('btn-refresh-data');
+      const tableLoading = document.getElementById('tableLoading');
+      refreshBtn.disabled = true;
+      refreshBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin"></i> Đang tải...';
+      if (tableLoading) tableLoading.style.display = 'flex';
+
+      google.script.run
+        .withSuccessHandler(dataRes => {
+          globalAssignees = dataRes.departments;
+          renderSidebarMenu(dataRes.departments);
+          populateDeptSelects(dataRes.departments);
+          allTasks = dataRes.tasks;
+          decorateTasks(allTasks);
+          applyFilters();
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Tải lại dữ liệu';
+          if (tableLoading) tableLoading.style.display = 'none';
+        })
+        .withFailureHandler(err => {
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Tải lại dữ liệu';
+          if (tableLoading) tableLoading.style.display = 'none';
+          showToast("Lỗi đồng bộ dữ liệu: " + err);
+        })
+        .getSystemData(currentUserSession);
+    }
+
+    function executeForceChangePassword() {
+      const newPass = document.getElementById('newPassInput').value;
+      const confirmPass = document.getElementById('confirmNewPassInput').value;
+      const changeErrBox = document.getElementById('change-pass-error-msg');
+      const btn = document.getElementById('changePassBtnSubmit');
+      if (newPass !== confirmPass) {
+        changeErrBox.textContent = "Xác nhận mật khẩu mới chưa khớp!";
+        changeErrBox.style.display = 'block';
+        return;
+      }
+      if (!currentUserSession || !currentUserSession.username) {
+        changeErrBox.textContent = "Phiên làm việc lỗi. Vui lòng tải lại trang!";
+        changeErrBox.style.display = 'block';
+        return;
+      }
+      changeErrBox.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang kích hoạt bảo mật...';
+      
+      google.script.run
+        .withSuccessHandler(res => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa fa-save"></i> Cập nhật & Kích hoạt';
+          if (res.success) {
+            document.getElementById('force-change-password-panel').style.display = 'none';
+            document.getElementById('login-form-sub-panel').style.display = 'block';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginCaptchaInput').value = '';
+            document.getElementById('newPassInput').value = '';
+            document.getElementById('confirmNewPassInput').value = '';
+            const loginBtn = document.getElementById('loginBtnSubmit');
+            if (loginBtn) { loginBtn.disabled = false; loginBtn.innerHTML = 'Đăng nhập'; }
+            generateCaptchaEngine();
+            customAlert("Kích hoạt tài khoản thành công! Vui lòng nhập mật khẩu mới để đăng nhập.");
+            showToast("Mật khẩu đã được cập nhật trên máy chủ!");
+          } else {
+            changeErrBox.textContent = res.msg;
+            changeErrBox.style.display = 'block';
+          }
+        })
+        .withFailureHandler(err => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa fa-save"></i> Cập nhật & Kích hoạt';
+          changeErrBox.textContent = "Lỗi kết nối máy chủ Cloud: " + err;
+          changeErrBox.style.display = 'block';
+        })
+        .changePasswordFirstTime(currentUserSession.username, newPass);
+    }
+
+    function renderUserHeader(user) {
+      document.getElementById('user-info-area').innerHTML = `
+        <div class="user-profile-badge">
+          <i class="fa fa-user-circle" style="font-size:16px; color:#fcd34d;"></i>
+          <span><b>${user.fullName}</b> [${user.role}] (${user.department})</span>
+          <a class="logout-action-link" onclick="executeLogoutAction()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+        </div>
+      `;
+    }
+
+    function executeLogoutAction() {
+      fetch('/api/logout',{method:'POST'}).catch(()=>{});
+      currentUserSession = null;
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('loginCaptchaInput').value = '';
+      document.getElementById('newPassInput').value = '';
+      document.getElementById('confirmNewPassInput').value = '';
+      document.getElementById('loginBtnSubmit').disabled = false;
+      document.getElementById('loginBtnSubmit').innerHTML = 'Đăng nhập';
+      document.getElementById('force-change-password-panel').style.display = 'none';
+      document.getElementById('login-form-sub-panel').style.display = 'block';
+      document.getElementById('main-system-ui').style.display = 'none';
+      document.getElementById('login-overlay-screen').style.display = 'flex';
+      generateCaptchaEngine();
+    }
+
+    function populateDeptSelects(departments) {
+      const filterDept = document.getElementById('filterDept');
+      const formDept = document.getElementById('cqPhuTrach');
+      filterDept.innerHTML = '<option value="">-- Tất cả Khối phòng ban --</option>';
+      formDept.innerHTML = '<option value="">-- Chọn phòng ban phụ trách --</option>';
+      Object.keys(departments).forEach(dept => {
+        filterDept.add(new Option(dept, dept));
+        formDept.add(new Option(dept, dept));
+      });
+      if (currentUserSession.role !== "Admin" || currentUserSession.department !== "Tất cả") {
+        filterDept.value = currentUserSession.department;
+        filterDept.disabled = true;
+        onFilterDeptChange();
+      }
+    }
+
+    function renderSidebarMenu(departments) {
+      const container = document.getElementById('dynamic-dept-menu');
+      container.innerHTML = '';
+      Object.keys(departments).forEach(dept => {
+        const liDept = document.createElement('li');
+        liDept.className = 'menu-item dept-item';
+        const zone = document.createElement('div');
+        zone.className = 'dept-click-zone';
+        zone.innerHTML = `<i class="fa fa-folder-open" style="color:var(--primary)"></i> <span>${dept}</span>`;
+        zone.onclick = () => {
+          if(currentUserSession.role === "Admin" && currentUserSession.department === "Tất cả") {
+            document.getElementById('filterDept').value = dept;
+            onFilterDeptChange();
+          }
+        };
+        liDept.appendChild(zone);
+        const toggle = document.createElement('i');
+        toggle.className = 'fa fa-chevron-down toggle-icon';
+        toggle.onclick = (e) => { e.stopPropagation(); ulUser.classList.toggle('open'); };
+        liDept.appendChild(toggle);
+        container.appendChild(liDept);
+        
+        const ulUser = document.createElement('ul');
+        ulUser.className = 'user-list';
+        departments[dept].forEach(user => {
+          const liUser = document.createElement('li');
+          liUser.className = 'user-item';
+          liUser.innerHTML = `<i class="fa fa-circle-user" style="font-size:11px;"></i> ${user}`;
+          liUser.onclick = () => {
+            if(currentUserSession.role === "Admin" && currentUserSession.department === "Tất cả") {
+              document.getElementById('filterDept').value = dept;
+              onFilterDeptChange();
+            }
+            document.getElementById('filterUser').value = user;
+            applyFilters();
+          };
+          ulUser.appendChild(liUser);
+        });
+        container.appendChild(ulUser);
+      });
+    }
+
+    function onFilterDeptChange() {
+      const selectedDept = document.getElementById('filterDept').value;
+      const filterUser = document.getElementById('filterUser');
+      filterUser.innerHTML = '<option value="">-- Tất cả Cán bộ phụ trách --</option>';
+      if (selectedDept && globalAssignees[selectedDept]) {
+        globalAssignees[selectedDept].forEach(user => { filterUser.add(new Option(user, user)); });
+      }
+      applyFilters();
+    }
+
+    function onFormDeptChange(targetUser = "") {
+      const selectedDept = document.getElementById('cqPhuTrach').value;
+      const formUser = document.getElementById('nguoiPhuTrach');
+      formUser.innerHTML = '<option value="">-- Giao chung cho phòng ban --</option>';
+      if (selectedDept && globalAssignees[selectedDept]) {
+        globalAssignees[selectedDept].forEach(user => { formUser.add(new Option(user, user)); });
+        if (targetUser) formUser.value = targetUser;
+      }
+    }
+
+    function filterByQuickStatus(status) {
+      quickFilterStatus = status;
+      document.querySelectorAll('.stats .card').forEach(c => c.classList.remove('active'));
+      if(status === "") document.getElementById('card-total').classList.add('active');
+      else if(status === "Chờ thẩm định") document.getElementById('card-pending').classList.add('active');
+      else if(status === "Hoàn thành") document.getElementById('card-done').classList.add('active');
+      else if(status === "Quá hạn") document.getElementById('card-overdue').classList.add('active');
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const searchVal = document.getElementById('searchTask').value.toLowerCase().trim();
+      const deptVal = document.getElementById('filterDept').value;
+      const userVal = document.getElementById('filterUser').value;
+      const statusVal = document.getElementById('filterStatus').value;
+      const nhomCVVal = document.getElementById('filterNhomCV').value;
+      const danhGiaVal = document.getElementById('filterDanhGia').value;
+      const diemSoVal = document.getElementById('filterDiemSo').value;
+      
+      currentFilteredTasks = allTasks.filter(task => {
+        const matchSearch = !searchVal || task._searchable.includes(searchVal);
+        const matchDept = !deptVal || task.cqPhuTrach === deptVal;
+        const matchUser = !userVal || task.nguoi === userVal;
+
+        let matchStatus = true;
+        if (quickFilterStatus === "Quá hạn") {
+          matchStatus = (task._computedStatus === "Quá hạn" || task._computedStatus === "Sắp hết hạn 12 giờ" || task._computedStatus === "Sắp hết hạn 24 giờ");
+        } else if (quickFilterStatus) {
+          matchStatus = (task._computedStatus === quickFilterStatus);
+        }
+        if (statusVal) {
+          if (statusVal === "Quá hạn") {
+            matchStatus = matchStatus && (task._computedStatus === "Quá hạn" || task._computedStatus === "Sắp hết hạn 12 giờ" || task._computedStatus === "Sắp hết hạn 24 giờ");
+          } else {
+            matchStatus = matchStatus && (task._computedStatus === statusVal);
+          }
+        }
+        const matchNhomCV = !nhomCVVal || task.nhomCongViec === nhomCVVal;
+        const matchDanhGia = !danhGiaVal || task.danhGiaBaoCao === danhGiaVal;
+        let matchDiemSo = true;
+        if(diemSoVal) {
+          const score = task.chamDiem ? Number(task.chamDiem) : 0;
+          if(diemSoVal === "high") matchDiemSo = (score >= 100);
+          if(diemSoVal === "low") matchDiemSo = (score < 100);
+        }
+        return matchSearch && matchDept && matchUser && matchStatus && matchNhomCV && matchDanhGia && matchDiemSo;
+      });
+      
+      const priority = { "Quá hạn": 1, "Sắp hết hạn 12 giờ": 2, "Sắp hết hạn 24 giờ": 3, "Chờ thẩm định": 4, "Yêu cầu chỉnh sửa": 5, "Đang xử lý": 6, "Hoàn thành": 7 };
+      currentFilteredTasks.sort((a, b) => {
+        const p1 = priority[a._computedStatus] || 99;
+        const p2 = priority[b._computedStatus] || 99;
+        if (p1 !== p2) return p1 - p2;
+        return (a.han && b.han) ? new Date(a.han) - new Date(b.han) : 0;
+      });
+      calculateStats(allTasks);
+      currentPage = 1;
+      renderTable(currentFilteredTasks);
+    }
+
+    function calculateStats(tasks) {
+      let total = tasks.length, done = 0, overdue = 0, pending = 0;
+      for (let i = 0; i < total; i++) {
+        if (tasks[i]._computedStatus === 'Hoàn thành') done++;
+        else if (tasks[i]._computedStatus === 'Chờ thẩm định') pending++;
+        else if (tasks[i]._computedStatus === 'Quá hạn' || tasks[i]._computedStatus === 'Sắp hết hạn 12 giờ' || tasks[i]._computedStatus === 'Sắp hết hạn 24 giờ') overdue++;
+      }
+      document.getElementById('st-total').textContent = total;
+      document.getElementById('st-pending').textContent = pending;
+      document.getElementById('st-done').textContent = done;
+      document.getElementById('st-overdue').textContent = overdue;
+    }
+
+    // THUẬT TOÁN VẼ BẢNG CAO CẤP ARRAY STRING BUFFER GỘP TỐC ĐỘ CAO (PHẢN HỒI CHỚP MẮT)
+    function renderTable(tasks){
+      const tbody = document.getElementById('taskTableBody'); tbody.innerHTML = '';
+      if (tasks.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="15" style="color:var(--text-muted); padding:45px; font-weight:500; text-align:center;"><i class="fa-solid fa-box-open" style="font-size:24px;margin-bottom:10px;display:block;opacity:0.5;"></i> Cơ sở dữ liệu trống hoặc không có mục nào phù hợp.</td></tr>`;
+        document.getElementById('pageInfo').textContent = 'Hiển thị 0 nhiệm vụ';
+        document.getElementById('pageButtons').innerHTML = ''; return;
+      }
+      const start = (currentPage - 1) * rowsPerPage;
+      const paginatedTasks = tasks.slice(start, start + rowsPerPage);
+      let rowsList = [];
+      const isAdmin = (currentUserSession && ['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
+      
+      paginatedTasks.forEach((task, idx) => {
+        let rowClass = "";
+        let badgeClass = 'status-tag-processing', dotIcon = '<i class="fa-solid fa-spinner fa-spin-pulse"></i> ';
+
+        if(task._computedStatus === 'Hoàn thành') {
+          badgeClass = 'status-tag-done'; dotIcon = '<i class="fa-solid fa-circle-check"></i> ';
+        } else if(task._computedStatus === 'Chờ thẩm định') {
+          badgeClass = 'status-tag-pending'; dotIcon = '<i class="fa-solid fa-clock-rotate-left"></i> ';
+        } else if(task._computedStatus === 'Yêu cầu chỉnh sửa') {
+          badgeClass = 'status-tag-rejected'; dotIcon = '<i class="fa-solid fa-arrow-rotate-left"></i> ';
+        } else if(task._computedStatus === 'Quá hạn') {
+          rowClass = 'class="row-quahan"'; badgeClass = 'status-tag-overdue'; dotIcon = '<i class="fa-solid fa-circle-exclamation"></i> ';
+        } else if(task._computedStatus === 'Sắp hết hạn 12 giờ') {
+          rowClass = 'class="row-12h"'; badgeClass = 'status-tag-overdue'; dotIcon = '<i class="fa-solid fa-clock"></i> ';
+        } else if(task._computedStatus === 'Sắp hết hạn 24 giờ') {
+          rowClass = 'class="row-24h"'; badgeClass = 'status-tag-processing'; dotIcon = '<i class="fa-solid fa-clock"></i> ';
+        }
+        
+        let actionButtons = '';
+        if (isAdmin) {
+          if (task._computedStatus === "Chờ thẩm định") {
+            // QUY TRÌNH DUYỆT KHÉP KÍN: MỞ FORM CẬP NHẬT TIẾN ĐỘ ĐIỀU HÀNH KHI BẤM DUYỆT/TRẢ LẠI
+            actionButtons = `
+              <button class="btn-success" onclick="openApprovalFromTable('${task.id}', 'Hoàn thành')" title="Cập nhật tiến độ điều hành phê duyệt"><i class="fa fa-check"></i> Duyệt</button>
+              <button class="btn-danger" onclick="openApprovalFromTable('${task.id}', 'Yêu cầu chỉnh sửa')" title="Trả lại yêu cầu chỉnh sửa"><i class="fa fa-reply"></i> Trả lại</button>
+            `;
+          } else {
+            actionButtons = `
+              <i class="fa-solid fa-pen-to-square fa-pen" style="cursor:pointer;color:var(--text-muted);" onclick="editTask('${task.id}')" title="Sửa đổi/Phê duyệt"></i>
+              <i class="fa-solid fa-trash-can fa-trash" style="cursor:pointer;color:var(--text-muted);margin-left:12px;" onclick="openConfirm('${task.id}')" title="Xóa"></i>
+            `;
+          }
+        } else {
+          if (task._computedStatus === "Chờ thẩm định" || task._computedStatus === "Hoàn thành") {
+            actionButtons = `<span style="font-size:12px;color:var(--text-muted);font-style:italic;cursor:pointer;" onclick="editTask('${task.id}')" title="Bấm để xem chi tiết"><i class="fa fa-eye"></i> Xem việc</span>`;
+          } else {
+            actionButtons = `
+              <button class="btn-primary" onclick="editTask('${task.id}')"><i class="fa fa-paper-plane"></i> Báo cáo CV</button>
+            `;
+          }
+        }
+        
+        rowsList.push(`
+          <tr ${rowClass}>
+            <td class="col-stt" style="font-weight:600; color:var(--text-muted);">${start + idx + 1}</td>
+            <td class="col-sovb" style="font-weight:600;">${escapeHtml(task.soVB) || '-'}</td>
+            <td class="col-coquan align-left">${escapeHtml(task.coQuan) || '-'}</td>
+            <td class="col-tencongviec align-left" style="font-weight:500; line-height:1.5;">${escapeHtml(task.ten) || '-'}</td>
+            <td class="col-phutrach align-left">${escapeHtml(task.cqPhuTrach) || '-'}</td>
+            <td class="col-canhan align-left" style="font-weight:600;">${escapeHtml(task.nguoi) || 'Phòng ban tiếp nhận'}</td>
+            <td class="col-date">${escapeHtml(task.ngayGiao) || '-'}</td>
+            <td class="col-date">${escapeHtml(task.han) || '-'}</td>
+            <td class="col-date">${escapeHtml(task.ngayHoanThanh) || '-'}</td>
+            <td class="col-status"><span class="status-tag ${badgeClass}">${dotIcon}${task._computedStatus}</span></td>
+            <td class="col-nhomcv">${escapeHtml(task.nhomCongViec) || '-'}</td>
+            <td class="col-diem" style="font-weight:700; color:var(--primary);">${escapeHtml(task.chamDiem) || '-'}</td>
+            <td class="col-danhgia" style="font-weight:500;">${escapeHtml(task.danhGiaBaoCao) || '-'}</td>
+            <td class="col-vbbh">${escapeHtml(task.soVBBanHanh) || '-'}</td>
+            <td class="col-action"><div class="actions-cell">${actionButtons}</div></td>
+          </tr>
+        `);
+      });
+      tbody.innerHTML = rowsList.join('');
+      renderPagination(tasks.length);
+    }
+
+    function openApprovalFromTable(id, targetStatus) {
+      editTask(id);
+      // Gán đè trạng thái tương ứng Lãnh đạo lựa chọn vào ô select trên form duyệt chi tiết
+      document.getElementById('trangThai').value = targetStatus;
+    }
+
+    function renderPagination(totalRows) {
+      const totalPages = Math.ceil(totalRows / rowsPerPage);
+      const buttonsContainer = document.getElementById('pageButtons');
+      document.getElementById('pageInfo').textContent = `Hiển thị mục ${Math.min((currentPage - 1) * rowsPerPage + 1, totalRows)} - ${Math.min(currentPage * rowsPerPage, totalRows)} trong tổng số ${totalRows} nhiệm vụ`;
+      buttonsContainer.innerHTML = '';
+      const btnPrev = document.createElement('button'); btnPrev.innerHTML = '<i class="fa fa-chevron-left"></i>';
+      btnPrev.disabled = currentPage === 1;
+      btnPrev.onclick = () => { currentPage--; renderTable(currentFilteredTasks); };
+      buttonsContainer.appendChild(btnPrev);
+      for (let i = 1; i <= totalPages; i++) {
+        if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          const btnPage = document.createElement('button'); btnPage.textContent = i;
+          if (i === currentPage) btnPage.className = 'active';
+          btnPage.onclick = () => { currentPage = i; renderTable(currentFilteredTasks); };
+          buttonsContainer.appendChild(btnPage);
+        }
+      }
+      const btnNext = document.createElement('button'); btnNext.innerHTML = '<i class="fa fa-chevron-right"></i>';
+      btnNext.disabled = currentPage === totalPages;
+      btnNext.onclick = () => { currentPage++; renderTable(currentFilteredTasks); };
+      buttonsContainer.appendChild(btnNext);
+    }
+
+    function updateScoreLimit() {
+      const nhomSelect = document.getElementById('nhomCongViec').value;
+      const diemInput = document.getElementById('chamDiem');
+      const labelDiem = document.getElementById('labelChamDiem');
+      let maxScore = 500;
+      if (nhomSelect === 'Nhóm 1') maxScore = 100;
+      else if (nhomSelect === 'Nhóm 2') maxScore = 200;
+      else if (nhomSelect === 'Nhóm 3') maxScore = 300;
+      else if (nhomSelect === 'Nhóm 4') maxScore = 400;
+      else if (nhomSelect === 'Nhóm 5') maxScore = 500;
+
+      if (!nhomSelect) {
+        labelDiem.innerHTML = `Chấm điểm giới hạn (0 - 500)`;
+        diemInput.max = 500;
+        diemInput.placeholder = "Chọn nhóm để xem giới hạn điểm...";
+      } else {
+        labelDiem.innerHTML = `Chấm điểm giới hạn (0 - ${maxScore}) <span style="color:var(--primary); font-size: 11px;">(Đã khóa)</span>`;
+        diemInput.max = maxScore;
+        diemInput.placeholder = `Nhập điểm số (Tối đa ${maxScore})...`;
+        if (diemInput.value && parseInt(diemInput.value) > maxScore) {
+          diemInput.value = maxScore;
+          showToast(`Hệ thống tự động điều chỉnh điểm xuống ${maxScore} cho phù hợp với ${nhomSelect}`);
+        }
+      }
+    }
+
+    function saveTaskData() {
+      const nhomSelect = document.getElementById('nhomCongViec').value;
+      const diemInput = document.getElementById('chamDiem').value;
+      if(nhomSelect && diemInput) {
+        let maxScore = 500;
+        if (nhomSelect === 'Nhóm 1') maxScore = 100;
+        else if (nhomSelect === 'Nhóm 2') maxScore = 200;
+        else if (nhomSelect === 'Nhóm 3') maxScore = 300;
+        else if (nhomSelect === 'Nhóm 4') maxScore = 400;
+        else if (nhomSelect === 'Nhóm 5') maxScore = 500;
+        if (parseInt(diemInput) > maxScore) {
+          alert(`Lỗi dữ liệu: [ ${nhomSelect} ] chỉ được phép chấm tối đa ${maxScore} điểm! Vui lòng nhập lại.`);
+          document.getElementById('chamDiem').focus();
+          return;
+        }
+      }
+
+      const id = document.getElementById('taskId').value || crypto.randomUUID();
+      let selectedStatus = document.getElementById('trangThai').value;
+
+      if (currentUserSession && currentUserSession.role !== "Admin") {
+        if (document.getElementById('soVBBanHanh').value.trim() !== "" || document.getElementById('ngayHoanThanh').value !== "") {
+          selectedStatus = "Chờ thẩm định";
+        } else {
+          selectedStatus = "Đang xử lý";
+        }
+      }
+      
+      const taskObj = {
+        id: id,
+        soVB: document.getElementById('soVB').value,
+        coQuan: document.getElementById('coQuan').value,
+        ten: document.getElementById('tenCongViec').value,
+        cqPhuTrach: document.getElementById('cqPhuTrach').value,
+        nguoi: document.getElementById('nguoiPhuTrach').value,
+        ngayGiao: document.getElementById('ngayGiao').value,
+        han: document.getElementById('hanXuLy').value,
+        ngayHoanThanh: document.getElementById('ngayHoanThanh').value,
+        trangThai: selectedStatus,
+        nhomCongViec: nhomSelect,
+        chamDiem: diemInput,
+        danhGiaBaoCao: document.getElementById('danhGiaBaoCao').value,
+        soVBBanHanh: document.getElementById('soVBBanHanh').value
+      };
+
+      const existingIndex = allTasks.findIndex(t => String(t.id) === String(taskObj.id));
+      if (existingIndex > -1) allTasks[existingIndex] = taskObj;
+      else allTasks.unshift(taskObj);
+
+      decorateTasks([taskObj]);
+      applyFilters();
+      closePopup();
+      
+      if (selectedStatus === "Chờ thẩm định") {
+        customAlert("Báo cáo tiến độ đã gửi lên hệ thống thành công! Trạng thái hiện tại: Chờ lãnh đạo thẩm định và duyệt điểm.");
+      } else {
+        showToast("Đã lưu dữ liệu nhiệm vụ thành công!");
+      }
+      google.script.run.withSuccessHandler(() => loadSystemDataInBackground()).withFailureHandler(err => {showToast("Không thể lưu: " + err); loadSystemDataInBackground();}).saveTask(taskObj);
+    }
+
+    function openConfirm(id) { deleteId = id; document.getElementById('confirmModal').classList.add('active'); }
+    function closeConfirm() { document.getElementById('confirmModal').classList.remove('active'); deleteId = null; }
+    function handleDelete() {
+      if (!deleteId) return;
+      allTasks = allTasks.filter(t => String(t.id) !== String(deleteId));
+      applyFilters();
+      const removedId = deleteId;
+      closeConfirm();
+      showToast("Đã loại bỏ nhiệm vụ khỏi danh sách.");
+      google.script.run.withSuccessHandler(() => loadSystemDataInBackground()).withFailureHandler(err => {showToast("Không thể xóa: " + err); loadSystemDataInBackground();}).deleteTask(removedId);
+    }
+
+    function clearFilters() {
+      document.getElementById('searchTask').value = '';
+      if(currentUserSession.role === "Admin" && currentUserSession.department === "Tất cả") {
+        document.getElementById('filterDept').value = '';
+        document.getElementById('filterUser').innerHTML = '<option value="">-- Tất cả Cán bộ phụ trách --</option>';
+      } else {
+        document.getElementById('filterUser').value = '';
+      }
+      document.getElementById('filterStatus').value = '';
+      document.getElementById('filterNhomCV').value = '';
+      document.getElementById('filterDanhGia').value = '';
+      document.getElementById('filterDiemSo').value = '';
+      quickFilterStatus = "";
+      document.querySelectorAll('.stats .card').forEach(c => c.classList.remove('active'));
+      document.getElementById('card-total').classList.add('active');
+      applyFilters();
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div'); toast.className = 'toast';
+      toast.innerHTML = `<i class="fa-solid fa-bell" style="color:#fcd34d;"></i> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 2500);
+    }
+
+    function openPopup() {
+      document.getElementById('taskForm').reset(); document.getElementById('taskId').value = '';
+      document.getElementById('modalTitle').textContent = 'Thiết lập dữ liệu nhiệm vụ mới';
+      document.getElementById('ngayGiao').value = new Date().toISOString().split('T')[0];
+      document.getElementById('nguoiPhuTrach').innerHTML = '<option value="">-- Giao chung cho phòng ban --</option>';
+      document.getElementById('form-security-warning').style.display = 'none';
+
+      const isAdmin = (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
+      document.getElementById('container-danhgia').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('container-trangthai').style.display = isAdmin ? 'block' : 'none';
+
+      document.getElementById('soVB').disabled = !isAdmin;
+      document.getElementById('coQuan').disabled = !isAdmin;
+      document.getElementById('tenCongViec').disabled = !isAdmin;
+      document.getElementById('cqPhuTrach').disabled = !isAdmin;
+      document.getElementById('nguoiPhuTrach').disabled = !isAdmin;
+      document.getElementById('ngayGiao').disabled = !isAdmin;
+      document.getElementById('hanXuLy').disabled = !isAdmin;
+      document.getElementById('nhomCongViec').disabled = !isAdmin;
+      document.getElementById('chamDiem').disabled = !isAdmin;
+      document.getElementById('ngayHoanThanh').disabled = false;
+      document.getElementById('soVBBanHanh').disabled = false;
+      document.getElementById('btn-submit-form').style.display = 'inline-flex';
+      
+      if (currentUserSession.department !== "Tất cả") {
+        document.getElementById('cqPhuTrach').value = currentUserSession.department; onFormDeptChange();
+      }
+      updateScoreLimit();
+      document.getElementById('taskModal').classList.add('active');
+    }
+    
+    function closePopup() { document.getElementById('taskModal').classList.remove('active'); }
+
+    function editTask(id) {
+      const task = allTasks.find(t => String(t.id) === String(id)); if (!task) return;
+      document.getElementById('taskId').value = task.id;
+      document.getElementById('soVB').value = task.soVB || '';
+      document.getElementById('coQuan').value = task.coQuan || '';
+      document.getElementById('tenCongViec').value = task.ten || '';
+      document.getElementById('cqPhuTrach').value = task.cqPhuTrach || '';
+      onFormDeptChange(task.nguoi);
+      document.getElementById('ngayGiao').value = task.ngayGiao || '';
+      document.getElementById('hanXuLy').value = task.han || '';
+      document.getElementById('ngayHoanThanh').value = task.ngayHoanThanh || '';
+      document.getElementById('trangThai').value = task.trangThai || 'Đang xử lý';
+      document.getElementById('nhomCongViec').value = task.nhomCongViec || '';
+      document.getElementById('chamDiem').value = task.chamDiem || '';
+      document.getElementById('danhGiaBaoCao').value = task.danhGiaBaoCao || '';
+      document.getElementById('soVBBanHanh').value = task.soVBBanHanh || '';
+
+      const isAdmin = (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
+      document.getElementById('container-danhgia').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('container-trangthai').style.display = isAdmin ? 'block' : 'none';
+
+      let isOwner = (task.nguoi && task.nguoi.toString().trim() === currentUserSession.fullName.toString().trim());
+
+      if (!isAdmin && !isOwner) {
+        document.getElementById('form-security-warning').style.display = 'block';
+        document.getElementById('soVB').disabled = true;
+        document.getElementById('coQuan').disabled = true;
+        document.getElementById('tenCongViec').disabled = true;
+        document.getElementById('cqPhuTrach').disabled = true;
+        document.getElementById('nguoiPhuTrach').disabled = true;
+        document.getElementById('ngayGiao').disabled = true;
+        document.getElementById('hanXuLy').disabled = true;
+        document.getElementById('nhomCongViec').disabled = true;
+        document.getElementById('chamDiem').disabled = true;
+        document.getElementById('ngayHoanThanh').disabled = true;
+        document.getElementById('soVBBanHanh').disabled = true;
+        document.getElementById('modalTitle').textContent = 'Xem chi tiết tiến độ nhiệm vụ chỉ định (Chỉ đọc)';
+        document.getElementById('btn-submit-form').style.display = 'none';
+      } else {
+        document.getElementById('form-security-warning').style.display = 'none';
+        document.getElementById('btn-submit-form').style.display = 'inline-flex';
+        document.getElementById('soVB').disabled = !isAdmin;
+        document.getElementById('coQuan').disabled = !isAdmin;
+        document.getElementById('tenCongViec').disabled = !isAdmin;
+        document.getElementById('cqPhuTrach').disabled = !isAdmin;
+        document.getElementById('nguoiPhuTrach').disabled = !isAdmin;
+        document.getElementById('ngayGiao').disabled = !isAdmin;
+        document.getElementById('hanXuLy').disabled = !isAdmin;
+        document.getElementById('nhomCongViec').disabled = !isAdmin;
+        document.getElementById('chamDiem').disabled = !isAdmin;
+        document.getElementById('ngayHoanThanh').disabled = false;
+        document.getElementById('soVBBanHanh').disabled = false;
+        
+        if (isAdmin) {
+          document.getElementById('modalTitle').textContent = 'Cập nhật tiến độ điều hành nhiệm vụ';
+          document.getElementById('btn-submit-form').innerHTML = 'Lưu thông tin';
+        } else {
+          document.getElementById('modalTitle').textContent = 'Báo cáo kết quả xử lý văn bản thực tế';
+          document.getElementById('btn-submit-form').innerHTML = '<i class="fa fa-paper-plane"></i> Gửi báo cáo Lãnh đạo';
+        }
+      }
+      updateScoreLimit();
+      document.getElementById('taskModal').classList.add('active');
+    }
+
+    function openStatsModal() {
+      document.getElementById('statsModal').classList.add('active');
+      const statsDeptFilter = document.getElementById('statsDeptFilter');
+      statsDeptFilter.innerHTML = '<option value="">-- Tất cả Phòng ban --</option>';
+      Object.keys(globalAssignees).forEach(dept => { statsDeptFilter.add(new Option(dept, dept)); });
+      switchStatsTab('dept');
+    }
+    function closeStatsModal() { document.getElementById('statsModal').classList.remove('active'); }
+    function switchStatsTab(tab) {
+      currentStatsTab = tab;
+      const btnDept = document.getElementById('btnStatsTabDept');
+      const btnUser = document.getElementById('btnStatsTabUser');
+      const userFilterContainer = document.getElementById('statsUserFilterContainer');
+      if(tab === 'dept') {
+        btnDept.className = 'btn btn-primary'; btnUser.className = 'btn btn-outline'; userFilterContainer.style.display = 'none';
+      } else {
+        btnDept.className = 'btn btn-outline'; btnUser.className = 'btn btn-primary'; userFilterContainer.style.display = 'block';
+      }
+      document.getElementById('statsDeptFilter').value = '';
+      renderDetailedStats();
+    }
+
+    function renderDetailedStats() {
+      const tbody = document.getElementById('statsTableBody');
+      const filterDeptVal = document.getElementById('statsDeptFilter').value;
+      tbody.innerHTML = '';
+      const statsMap = {};
+
+      if (currentStatsTab === 'dept') {
+        Object.keys(globalAssignees).forEach(dept => { statsMap[dept] = { total: 0, done: 0, proc: 0, pending: 0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 }; });
+      } else {
+        Object.keys(globalAssignees).forEach(dept => {
+          if (!filterDeptVal || dept === filterDeptVal) {
+            globalAssignees[dept].forEach(user => { statsMap[user] = { total: 0, done: 0, proc: 0, pending: 0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 }; });
+          }
+        });
+      }
+      
+      allTasks.forEach(task => {
+        const tDept = task.cqPhuTrach ? task.cqPhuTrach.trim() : 'Chưa phân loại';
+        const tUser = task.nguoi ? task.nguoi.trim() : 'Chưa chỉ định';
+        let key = currentStatsTab === 'dept' ? tDept : tUser;
+        if (currentStatsTab === 'user' && filterDeptVal && tDept !== filterDeptVal) return;
+        if (!statsMap[key]) statsMap[key] = { total: 0, done: 0, proc: 0, pending: 0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 };
+
+        statsMap[key].total++;
+        const st = task._computedStatus || task.trangThai;
+        if (st === 'Hoàn thành') statsMap[key].done++;
+        else if (st === 'Chờ thẩm định') statsMap[key].pending++;
+        else if (st === 'Quá hạn' || st === 'Sắp hết hạn 12 giờ' || st === 'Sắp hết hạn 24 giờ') statsMap[key].over++;
+        else statsMap[key].proc++;
+
+        const nhom = task.nhomCongViec ? task.nhomCongViec.trim() : '';
+        if (nhom === 'Nhóm 1') statsMap[key].n1++;
+        else if (nhom === 'Nhóm 2') statsMap[key].n2++;
+        else if (nhom === 'Nhóm 3') statsMap[key].n3++;
+        else if (nhom === 'Nhóm 4') statsMap[key].n4++;
+        else if (nhom === 'Nhóm 5') statsMap[key].n5++;
+
+        const diem = parseFloat(task.chamDiem);
+        if (!isNaN(diem)) statsMap[key].score += diem;
+      });
+      
+      const keys = Object.keys(statsMap).sort();
+      if (keys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center; padding:30px; color:var(--text-muted); font-weight:500;">Không tìm thấy dữ liệu thống kê phù hợp.</td></tr>`;
+        return;
+      }
+      let detailedRows = [];
+      keys.forEach(key => {
+        const s = statsMap[key];
+        const icon = currentStatsTab === 'dept' ? '<i class="fa-solid fa-building" style="color:var(--text-muted); margin-right:8px;"></i>' : '<i class="fa-solid fa-user-tie" style="color:var(--text-muted); margin-right:8px;"></i>';
+        detailedRows.push(`
+          <tr>
+            <td style="text-align: left; font-weight: 600;">${icon}${key}</td>
+            <td><span class="badge-stat b-total">${s.total}</span></td>
+            <td><span class="badge-stat b-done">${s.done}</span></td>
+            <td><span class="badge-stat b-proc">${s.proc}</span></td>
+            <td><span class="badge-stat b-pending">${s.pending}</span></td>
+            <td><span class="badge-stat b-over">${s.over}</span></td>
+            <td>${s.n1 > 0 ? s.n1 : '-'}</td>
+            <td>${s.n2 > 0 ? s.n2 : '-'}</td>
+            <td>${s.n3 > 0 ? s.n3 : '-'}</td>
+            <td>${s.n4 > 0 ? s.n4 : '-'}</td>
+            <td>${s.n5 > 0 ? s.n5 : '-'}</td>
+            <td style="font-weight: 700; color: var(--danger); font-size: 14px;">${s.score}</td>
+          </tr>
+        `);
+      });
+      tbody.innerHTML = detailedRows.join('');
+    }
+
+    async function exportStatsToExcel() {
+      const filterDeptVal = document.getElementById('statsDeptFilter').value;
+      const statsMap = {};
+      if (currentStatsTab === 'dept') {
+        Object.keys(globalAssignees).forEach(dept => { statsMap[dept] = { total: 0, done: 0, proc: 0, pending: 0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 }; });
+      } else {
+        Object.keys(globalAssignees).forEach(dept => {
+          if (!filterDeptVal || dept === filterDeptVal) {
+            globalAssignees[dept].forEach(user => { statsMap[user] = { total: 0, done: 0, proc: 0, pending: 0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 }; });
+          }
+        });
+      }
+      
+      allTasks.forEach(task => {
+        const tDept = task.cqPhuTrach ? task.cqPhuTrach.trim() : 'Chưa phân loại';
+        const tUser = task.nguoi ? task.nguoi.trim() : 'Chưa chỉ định';
+        let key = currentStatsTab === 'dept' ? tDept : tUser;
+        if (currentStatsTab === 'user' && filterDeptVal && tDept !== filterDeptVal) return;
+        if (!statsMap[key]) statsMap[key] = { total: 0, done: 0, proc: 0, pending:0, over: 0, n1: 0, n2: 0, n3: 0, n4: 0, n5: 0, score: 0 };
+        statsMap[key].total++;
+        const st = task._computedStatus || task.trangThai;
+        if (st === 'Hoàn thành') statsMap[key].done++;
+        else if (st === 'Chờ thẩm định') statsMap[key].pending++;
+        else if (st === 'Quá hạn' || st === 'Sắp hết hạn 12 giờ' || st === 'Sắp hết hạn 24 giờ') statsMap[key].over++;
+        else statsMap[key].proc++;
+        const nhom = task.nhomCongViec ? task.nhomCongViec.trim() : '';
+        if (nhom === 'Nhóm 1') statsMap[key].n1++;
+        else if (nhom === 'Nhóm 2') statsMap[key].n2++;
+        else if (nhom === 'Nhóm 3') statsMap[key].n3++;
+        else if (nhom === 'Nhóm 4') statsMap[key].n4++;
+        else if (nhom === 'Nhóm 5') statsMap[key].n5++;
+        const diem = parseFloat(task.chamDiem);
+        if (!isNaN(diem)) statsMap[key].score += diem;
+      });
+      
+      const keys = Object.keys(statsMap).sort();
+      if(keys.length === 0) { showToast("Không có kết quả nào để xuất."); return; }
+      
+      const workbook = new ExcelJS.Workbook(); const worksheet = workbook.addWorksheet('Bảng Thống Kê');
+      worksheet.columns = [
+        { header: currentStatsTab === 'dept' ? 'Phòng ban' : 'Cá nhân phụ trách', key: 'name', width: 35 },
+        { header: 'Tổng số CV', key: 'total', width: 15 }, { header: 'Đã hoàn thành', key: 'done', width: 15 },
+        { header: 'Đang xử lý', key: 'proc', width: 15 }, { header: 'Chờ thẩm định', key: 'pending', width: 15 }, { header: 'Quá hạn', key: 'over', width: 15 },
+        { header: 'Nhóm 1', key: 'n1', width: 12 }, { header: 'Nhóm 2', key: 'n2', width: 12 },
+        { header: 'Nhóm 3', key: 'n3', width: 12 }, { header: 'Nhóm 4', key: 'n4', width: 12 },
+        { header: 'Nhóm 5', key: 'n5', width: 12 }, { header: 'Tổng Điểm', key: 'score', width: 18 }
+      ];
+      worksheet.getRow(1).height = 30;
+      worksheet.getRow(1).eachCell(c => { c.font = { name: 'Arial', bold: true, color: { argb: 'FFFFFFFF' } }; c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF004B92' } }; c.alignment = { vertical: 'middle', horizontal: 'center' }; c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} }; });
+      keys.forEach((key) => {
+        const s = statsMap[key];
+        const row = worksheet.addRow({ name: key, total: s.total, done: s.done, proc: s.proc, pending: s.pending, over: s.over, n1: s.n1, n2: s.n2, n3: s.n3, n4: s.n4, n5: s.n5, score: s.score });
+        row.height = 25; row.eachCell((c, colNum) => { c.font = { name: 'Arial' }; c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} }; c.alignment = { vertical: 'middle', horizontal: colNum === 1 ? 'left' : 'center' }; });
+      });
+      const buffer = await workbook.xlsx.writeBuffer();
+      const tabName = currentStatsTab === 'dept' ? 'Theo_PhongBan' : 'Theo_CaNhan';
+      const dateStr = new Date().toISOString().split('T')[0];
+      saveAs(new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `Bao_Cao_Thong_Ke_${tabName}_${dateStr}.xlsx`);
+      showToast("Đã xuất báo cáo Excel thành công!");
+    }
+
+    function openKpiModal() {
+      document.getElementById('kpiModal').classList.add('active');
+      const kpiDeptFilter = document.getElementById('kpiDeptFilter');
+      kpiDeptFilter.innerHTML = '<option value="">-- Toàn bộ cơ quan --</option>';
+      Object.keys(globalAssignees).forEach(dept => { kpiDeptFilter.add(new Option(dept, dept)); });
+      if (currentUserSession.role !== "Admin" || currentUserSession.department !== "Tất cả") {
+        kpiDeptFilter.value = currentUserSession.department; kpiDeptFilter.disabled = true;
+      }
+      renderKpiTable();
+    }
+    function closeKpiModal() { document.getElementById('kpiModal').classList.remove('active'); }
+    
+    function renderKpiTable() {
+      const tbody = document.getElementById('kpiTableBody');
+      const filterDeptVal = document.getElementById('kpiDeptFilter').value;
+      tbody.innerHTML = '';
+      const kpiMap = {};
+      Object.keys(globalAssignees).forEach(dept => {
+        if (!filterDeptVal || dept === filterDeptVal) {
+          globalAssignees[dept].forEach(user => {
+            kpiMap[user] = { dept: dept, total: 0, done: 0, proc: 0, over: 0, score: 0, n1: 0, s1: 0, n2: 0, s2: 0, n3: 0, s3: 0, n4: 0, s4: 0, n5: 0, s5: 0 };
+          });
+        }
+      });
+      
+      allTasks.forEach(task => {
+        const tDept = task.cqPhuTrach ? task.cqPhuTrach.trim() : 'Chưa phân loại';
+        const tUser = task.nguoi ? task.nguoi.trim() : '';
+        if (!tUser || (filterDeptVal && tDept !== filterDeptVal)) return;
+        if (!kpiMap[tUser]) { kpiMap[tUser] = { dept: tDept, total: 0, done: 0, proc: 0, over: 0, score: 0, n1:0, s1:0, n2:0, s2:0, n3:0, s3:0, n4:0, s4:0, n5:0, s5:0 }; }
+
+        kpiMap[tUser].total++;
+        const st = task._computedStatus || task.trangThai;
+        if (st === 'Hoàn thành') kpiMap[tUser].done++;
+        else if (st === 'Quá hạn' || st === 'Sắp hết hạn 12 giờ' || st === 'Sắp hết hạn 24 giờ') kpiMap[tUser].over++;
+        else kpiMap[tUser].proc++;
+
+        const diem = parseFloat(task.chamDiem);
+        const validDiem = !isNaN(diem) ? diem : 0;
+        kpiMap[tUser].score += validDiem;
+        const nhom = task.nhomCongViec ? task.nhomCongViec.trim() : '';
+        if (nhom === 'Nhóm 1') { kpiMap[tUser].n1++; kpiMap[tUser].s1 += validDiem; }
+        else if (nhom === 'Nhóm 2') { kpiMap[tUser].n2++; kpiMap[tUser].s2 += validDiem; }
+        else if (nhom === 'Nhóm 3') { kpiMap[tUser].n3++; kpiMap[tUser].s3 += validDiem; }
+        else if (nhom === 'Nhóm 4') { kpiMap[tUser].n4++; kpiMap[tUser].s4 += validDiem; }
+        else if (nhom === 'Nhóm 5') { kpiMap[tUser].n5++; kpiMap[tUser].s5 += validDiem; }
+      });
+      
+      const keys = Object.keys(kpiMap).sort();
+      if (keys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="19" style="text-align:center; padding:30px; color:var(--text-muted); font-weight:500;">Không có dữ liệu cán bộ.</td></tr>`;
+        return;
+      }
+      let kpiRows = [];
+      keys.forEach(user => {
+        const s = kpiMap[user];
+        let rankBadge = '';
+        let completionRateStr = '-';
+        const v1 = s.n1 > 0 ? (s.s1 / s.n1) : 0;
+        const v2 = s.n2 > 0 ? ((s.s2 / s.n2) / 2) : 0;
+        const v3 = s.n3 > 0 ? ((s.s3 / s.n3) / 3) : 0;
+        const v4 = s.n4 > 0 ? ((s.s4 / s.n4) / 4) : 0;
+        const v5 = s.n5 > 0 ? ((s.s5 / s.n5) / 5) : 0;
+        let activeGroupsCount = 0;
+        let totalSum = 0;
+        if (s.n1 > 0) { totalSum += v1; activeGroupsCount++; }
+        if (s.n2 > 0) { totalSum += v2; activeGroupsCount++; }
+        if (s.n3 > 0) { totalSum += v3; activeGroupsCount++; }
+        if (s.n4 > 0) { totalSum += v4; activeGroupsCount++; }
+        if (s.n5 > 0) { totalSum += v5; activeGroupsCount++; }
+        
+        if (s.total === 0 || activeGroupsCount === 0) {
+          rankBadge = '<span class="badge-kpi kpi-na">Chưa có nhiệm vụ</span>';
+        } else {
+          let rate = totalSum / activeGroupsCount;
+          completionRateStr = rate.toFixed(1) + '%';
+          if (rate >= 90) rankBadge = '<span class="badge-kpi kpi-xs"><i class="fa fa-star"></i> Xuất sắc</span>';
+          else if (rate >= 70) rankBadge = '<span class="badge-kpi kpi-tot">Hoàn thành tốt</span>';
+          else if (rate >= 50) rankBadge = '<span class="badge-kpi kpi-ht">Hoàn thành</span>';
+          else rankBadge = '<span class="badge-kpi kpi-cht">Chưa hoàn thành</span>';
+        }
+        const a1 = s.n1 > 0 ? v1.toFixed(1) + '%' : '-';
+        const a2 = s.n2 > 0 ? v2.toFixed(1) + '%' : '-';
+        const a3 = s.n3 > 0 ? v3.toFixed(1) + '%' : '-';
+        const a4 = s.n4 > 0 ? v4.toFixed(1) + '%' : '-';
+        const a5 = s.n5 > 0 ? v5.toFixed(1) + '%' : '-';
+        
+        kpiRows.push(`
+          <tr>
+            <td style="text-align: left; font-weight: 700; color:var(--text-dark);"><i class="fa-solid fa-user-circle" style="color:var(--text-muted); margin-right:6px;"></i> ${user}</td>
+            <td style="text-align: left; font-size:12px; color:var(--text-muted);">${s.dept}</td>
+            <td><span class="badge-stat b-total">${s.total}</span></td>
+            <td style="background:#f0f9ff;"><span class="badge-stat b-done">${s.done}</span></td>
+            <td style="background:#f0f9ff;"><span class="badge-stat b-proc">${s.proc}</span></td>
+            <td style="background:#f0f9ff;"><span class="badge-stat b-over">${s.over}</span></td>
+            <td>${s.n1 > 0 ? s.n1 : '-'}</td><td style="color:#d97706; font-weight:600;">${a1}</td>
+            <td>${s.n2 > 0 ? s.n2 : '-'}</td><td style="color:#d97706; font-weight:600;">${a2}</td>
+            <td>${s.n3 > 0 ? s.n3 : '-'}</td><td style="color:#d97706; font-weight:600;">${a3}</td>
+            <td>${s.n4 > 0 ? s.n4 : '-'}</td><td style="color:#d97706; font-weight:600;">${a4}</td>
+            <td>${s.n5 > 0 ? s.n5 : '-'}</td><td style="color:#d97706; font-weight:600;">${a5}</td>
+            <td style="font-weight: 800; color: #4338ca; font-size: 15px;">${completionRateStr}</td>
+            <td>${rankBadge}</td>
+          </tr>
+        `);
+      });
+      tbody.innerHTML = kpiRows.join('');
+    }
+
+    async function exportKpiToExcel() {
+      const filterDeptVal = document.getElementById('kpiDeptFilter').value;
+      const kpiMap = {};
+      Object.keys(globalAssignees).forEach(dept => {
+        if (!filterDeptVal || dept === filterDeptVal) {
+          globalAssignees[dept].forEach(user => {
+            kpiMap[user] = { dept: dept, total: 0, done: 0, proc: 0, over: 0, score: 0, n1:0, s1:0, n2:0, s2:0, n3:0, s3:0, n4:0, s4:0, n5:0, s5:0 };
+          });
+        }
+      });
+      
+      allTasks.forEach(task => {
+        const tDept = task.cqPhuTrach ? task.cqPhuTrach.trim() : 'Chưa phân loại';
+        const tUser = task.nguoi ? task.nguoi.trim() : '';
+        if (!tUser || (filterDeptVal && tDept !== filterDeptVal)) return;
+        if (!kpiMap[tUser]) kpiMap[tUser] = { dept: tDept, total: 0, done: 0, proc: 0, over: 0, score: 0, n1:0, s1:0, n2:0, s2:0, n3:0, s3:0, n4:0, s4:0, n5:0, s5:0 };
+        kpiMap[tUser].total++;
+        const st = task._computedStatus || task.trangThai;
+        if (st === 'Hoàn thành') kpiMap[tUser].done++;
+        else if (st === 'Quá hạn' || st === 'Sắp hết hạn 12 giờ' || st === 'Sắp hết hạn 24 giờ') kpiMap[tUser].over++;
+        else kpiMap[tUser].proc++;
+        const diem = parseFloat(task.chamDiem);
+        const validDiem = !isNaN(diem) ? diem : 0;
+        kpiMap[tUser].score += validDiem;
+        const nhom = task.nhomCongViec ? task.nhomCongViec.trim() : '';
+        if (nhom === 'Nhóm 1') { kpiMap[tUser].n1++; kpiMap[tUser].s1 += validDiem; }
+        else if (nhom === 'Nhóm 2') { kpiMap[tUser].n2++; kpiMap[tUser].s2 += validDiem; }
+        else if (nhom === 'Nhóm 3') { kpiMap[tUser].n3++; kpiMap[tUser].s3 += validDiem; }
+        else if (nhom === 'Nhóm 4') { kpiMap[tUser].n4++; kpiMap[tUser].s4 += validDiem; }
+        else if (nhom === 'Nhóm 5') { kpiMap[tUser].n5++; kpiMap[tUser].s5 += validDiem; }
+      });
+      
+      const keys = Object.keys(kpiMap).sort();
+      if(keys.length === 0) { showToast("Không có kết quả nào để xuất."); return; }
+      const workbook = new ExcelJS.Workbook(); const worksheet = workbook.addWorksheet('Báo cáo KPI');
+      worksheet.columns = [
+        { header: 'Tên cán bộ nhân sự', key: 'user', width: 25 }, { header: 'Phòng ban', key: 'dept', width: 25 },
+        { header: 'Tổng CV', key: 'total', width: 10 }, { header: 'Hoàn thành', key: 'done', width: 12 },
+        { header: 'Đang xử lý', key: 'proc', width: 12 }, { header: 'Quá hạn', key: 'over', width: 10 },
+        { header: 'CV Nhóm 1', key: 'n1', width: 12 }, { header: '% Nhóm 1', key: 'a1', width: 12 },
+        { header: 'CV Nhóm 2', key: 'n2', width: 12 }, { header: '% Nhóm 2', key: 'a2', width: 12 },
+        { header: 'CV Nhóm 3', key: 'n3', width: 12 }, { header: '% Nhóm 3', key: 'a3', width: 12 },
+        { header: 'CV Nhóm 4', key: 'n4', width: 12 }, { header: '% Nhóm 4', key: 'a4', width: 12 },
+        { header: 'CV Nhóm 5', key: 'n5', width: 12 }, { header: '% Nhóm 5', key: 'a5', width: 12 },
+        { header: 'Tỷ lệ Hoàn thành (%)', key: 'rate', width: 18 }, { header: 'Đánh giá/Xếp loại', key: 'rank', width: 20 }
+      ];
+      worksheet.getRow(1).height = 30;
+      worksheet.getRow(1).eachCell(c => { c.font = { name: 'Arial', bold: true, color: { argb: 'FFFFFFFF' } }; c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD97706' } }; c.alignment = { vertical: 'middle', horizontal: 'center' }; c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} }; });
+      
+      keys.forEach((user) => {
+        const s = kpiMap[user];
+        let rankText = "";
+        let completionRateStr = "-";
+        const v1 = s.n1 > 0 ? (s.s1 / s.n1) : 0;
+        const v2 = s.n2 > 0 ? ((s.s2 / s.n2) / 2) : 0;
+        const v3 = s.n3 > 0 ? ((s.s3 / s.n3) / 3) : 0;
+        const v4 = s.n4 > 0 ? ((s.s4 / s.n4) / 4) : 0;
+        const v5 = s.n5 > 0 ? ((s.s5 / s.n5) / 5) : 0;
+        let activeGroupsCount = 0;
+        let totalSum = 0;
+        if (s.n1 > 0) { totalSum += v1; activeGroupsCount++; }
+        if (s.n2 > 0) { totalSum += v2; activeGroupsCount++; }
+        if (s.n3 > 0) { totalSum += v3; activeGroupsCount++; }
+        if (s.n4 > 0) { totalSum += v4; activeGroupsCount++; }
+        if (s.n5 > 0) { totalSum += v5; activeGroupsCount++; }
+        
+        if (s.total === 0 || activeGroupsCount === 0) {
+          rankText = 'Chưa có nhiệm vụ';
+        } else {
+          let rate = totalSum / activeGroupsCount;
+          completionRateStr = rate.toFixed(1) + '%';
+          if (rate >= 90) rankText = 'Xuất sắc';
+          else if (rate >= 70) rankText = 'Hoàn thành tốt';
+          else if (rate >= 50) rankText = 'Hoàn thành';
+          else rankText = 'Chưa hoàn thành';
+        }
+        const a1 = s.n1 > 0 ? v1.toFixed(1) + '%' : '-';
+        const a2 = s.n2 > 0 ? v2.toFixed(1) + '%' : '-';
+        const a3 = s.n3 > 0 ? v3.toFixed(1) + '%' : '-';
+        const a4 = s.n4 > 0 ? v4.toFixed(1) + '%' : '-';
+        const a5 = s.n5 > 0 ? v5.toFixed(1) + '%' : '-';
+        
+        const row = worksheet.addRow({ user: user, dept: s.dept, total: s.total, done: s.done, proc: s.proc, over: s.over, n1: s.n1, a1: a1, n2: s.n2, a2: a2, n3: s.n3, a3: a3, n4: s.n4, a4: a4, n5: s.n5, a5: a5, rate: completionRateStr, rank: rankText });
+        row.height = 25; row.eachCell((c, colNum) => { c.font = { name: 'Arial', bold: (colNum === 17) }; c.border = { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'} }; c.alignment = { vertical: 'middle', horizontal: (colNum === 1 || colNum === 2) ? 'left' : 'center' }; if (colNum === 17) c.font.color = { argb: 'FF4338CA' }; });
+      });
+      const buffer = await workbook.xlsx.writeBuffer();
+      const dateStr = new Date().toISOString().split('T')[0];
+      saveAs(new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `Bao_Cao_KPI_CanBo_${dateStr}.xlsx`);
+      showToast("Đã tải xuống báo cáo điểm KPI thành công!");
+    }
+  </script>
+<div style="position:fixed;bottom:6px;left:10px;font:12px Arial;color:#777;z-index:1">DTA Web • Phiên bản GitHub</div>
+
+<style>
+#dtaAdminLayer{position:fixed;inset:0;background:rgba(10,22,47,.68);z-index:100000;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(8px)}
+#dtaAdminLayer.open{display:flex}#dtaAdminFrameShell{width:min(1250px,100%);height:min(900px,96vh);background:white;border-radius:22px;overflow:hidden;box-shadow:0 35px 90px rgba(0,0,0,.35);display:flex;flex-direction:column}#dtaAdminFrameShell>header{display:flex;justify-content:space-between;align-items:center;background:#102a50;color:white;padding:12px 22px;font:600 15px Inter,Arial,sans-serif}#dtaAdminFrameShell button{background:#ffffff22;border:1px solid #ffffff44;color:white;border-radius:10px;padding:8px 14px;cursor:pointer;font:inherit}#dtaAdminFrameShell iframe{border:0;flex:1;width:100%;min-height:0}
+</style>
+<div id="dtaAdminLayer" role="dialog" aria-modal="true" aria-label="Quản trị hệ thống"><div id="dtaAdminFrameShell"><header><span>⚙ Quản trị phòng ban, người dùng và mật khẩu</span><button type="button" onclick="closeAdminOverlay()">✕ Đóng quản trị</button></header><iframe id="dtaAdminIframe" title="Bảng quản trị DTA"></iframe></div></div>
+<script>
+function openAdminOverlay(){const layer=document.getElementById('dtaAdminLayer');document.getElementById('dtaAdminIframe').src='/admin.html';layer.classList.add('open');document.body.style.overflow='hidden'}
+function closeAdminOverlay(){document.getElementById('dtaAdminLayer').classList.remove('open');document.getElementById('dtaAdminIframe').src='about:blank';document.body.style.overflow='';if(typeof loadSystemDataInBackground==='function')loadSystemDataInBackground()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('dtaAdminLayer').classList.contains('open'))closeAdminOverlay()});
+</script>
+</body>
+</html>
