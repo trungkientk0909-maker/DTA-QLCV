@@ -413,7 +413,17 @@
 @media(max-width:410px){#login-overlay-screen .captcha-row-layout{flex-direction:column}#login-overlay-screen .captcha-display-zone{min-height:48px}#login-overlay-screen .login-inline-options{gap:10px}}
 @media(prefers-reduced-motion:reduce){#login-overlay-screen *,#login-overlay-screen *::before,#login-overlay-screen *::after{animation:none!important;transition:none!important}}
 
-  </style>
+  
+/* DTA V5 — Premium responsive workspace */
+#main-system-ui{background:linear-gradient(135deg,#f4f8ff,#f8fafd);min-height:100vh}
+#main-system-ui .banner{background:linear-gradient(115deg,#0b2145,#194b94 67%,#256bd1);border-radius:23px;padding:31px 34px;box-shadow:0 18px 44px #0d347524}
+#main-system-ui .sidebar{border-radius:22px;background:#fff;border:1px solid #e1e9f5;box-shadow:0 12px 36px #0c32630d}
+#main-system-ui .card,#main-system-ui .filter-panel,#main-system-ui .table-container{border-radius:18px;box-shadow:0 8px 26px #123d700b}
+#main-system-ui .controls-row{flex-wrap:wrap}
+#main-system-ui button,#main-system-ui select,#main-system-ui input{max-width:100%}
+@media(max-width:980px){#main-system-ui .main-layout{flex-direction:column;gap:18px}#main-system-ui .sidebar{width:100%;min-width:0;padding:17px}#main-system-ui .main-content{width:100%}#main-system-ui .banner{flex-wrap:wrap;gap:18px}#main-system-ui .stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#main-system-ui .container{padding:12px}#main-system-ui .banner{padding:22px 18px;border-radius:18px}#main-system-ui .banner h1{font-size:21px;line-height:1.35}#main-system-ui .banner p{font-size:13px}#main-system-ui .controls-row{display:grid;grid-template-columns:1fr;gap:9px}#main-system-ui .controls-row button{width:100%;justify-content:center}#main-system-ui .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#main-system-ui .stats .card{padding:12px}#main-system-ui .main-layout{gap:12px}#main-system-ui .sidebar{padding:12px}#main-system-ui .form-row{flex-direction:column;gap:0}#main-system-ui .modal{width:98%;max-height:96dvh}#main-system-ui .modal-body{padding:18px}#main-system-ui .pagination-controls{flex-wrap:wrap;gap:10px}#main-system-ui .table-responsive,#main-system-ui .table-wrapper{overflow-x:auto}}
+</style>
 </head>
 <body>
   <div id="login-overlay-screen">
@@ -691,7 +701,7 @@
             <div class="col input-group">
               <label>Cá nhân phụ trách xử lý</label>
               <select id="nguoiPhuTrach">
-                <option value="">-- Chọn cán bộ tiếp nhận --</option>
+                <option value="">-- Giao chung cho phòng ban --</option>
               </select>
             </div>
           </div>
@@ -1048,7 +1058,7 @@
             }
             currentUserSession = res.user;
             document.getElementById("admin-management-link").style.display = (res.user.role === "Admin" && res.user.department === "Tất cả") ? "flex" : "none";
-            if (currentUserSession.role === "Admin" && currentUserSession.department === "Tất cả") {
+            if (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role)) {
               document.getElementById('btn-create-task').style.display = 'inline-flex';
             } else {
               document.getElementById('btn-create-task').style.display = 'none';
@@ -1260,7 +1270,7 @@
     function onFormDeptChange(targetUser = "") {
       const selectedDept = document.getElementById('cqPhuTrach').value;
       const formUser = document.getElementById('nguoiPhuTrach');
-      formUser.innerHTML = '<option value="">-- Chọn cán bộ tiếp nhận --</option>';
+      formUser.innerHTML = '<option value="">-- Giao chung cho phòng ban --</option>';
       if (selectedDept && globalAssignees[selectedDept]) {
         globalAssignees[selectedDept].forEach(user => { formUser.add(new Option(user, user)); });
         if (targetUser) formUser.value = targetUser;
@@ -1351,7 +1361,7 @@
       const start = (currentPage - 1) * rowsPerPage;
       const paginatedTasks = tasks.slice(start, start + rowsPerPage);
       let rowsList = [];
-      const isAdmin = (currentUserSession && currentUserSession.role === "Admin");
+      const isAdmin = (currentUserSession && ['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
       
       paginatedTasks.forEach((task, idx) => {
         let rowClass = "";
@@ -1402,7 +1412,7 @@
             <td class="col-coquan align-left">${escapeHtml(task.coQuan) || '-'}</td>
             <td class="col-tencongviec align-left" style="font-weight:500; line-height:1.5;">${escapeHtml(task.ten) || '-'}</td>
             <td class="col-phutrach align-left">${escapeHtml(task.cqPhuTrach) || '-'}</td>
-            <td class="col-canhan align-left" style="font-weight:600;">${escapeHtml(task.nguoi) || '-'}</td>
+            <td class="col-canhan align-left" style="font-weight:600;">${escapeHtml(task.nguoi) || 'Phòng ban tiếp nhận'}</td>
             <td class="col-date">${escapeHtml(task.ngayGiao) || '-'}</td>
             <td class="col-date">${escapeHtml(task.han) || '-'}</td>
             <td class="col-date">${escapeHtml(task.ngayHoanThanh) || '-'}</td>
@@ -1577,10 +1587,10 @@
       document.getElementById('taskForm').reset(); document.getElementById('taskId').value = '';
       document.getElementById('modalTitle').textContent = 'Thiết lập dữ liệu nhiệm vụ mới';
       document.getElementById('ngayGiao').value = new Date().toISOString().split('T')[0];
-      document.getElementById('nguoiPhuTrach').innerHTML = '<option value="">-- Chọn cán bộ tiếp nhận --</option>';
+      document.getElementById('nguoiPhuTrach').innerHTML = '<option value="">-- Giao chung cho phòng ban --</option>';
       document.getElementById('form-security-warning').style.display = 'none';
 
-      const isAdmin = (currentUserSession.role === "Admin");
+      const isAdmin = (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
       document.getElementById('container-danhgia').style.display = isAdmin ? 'block' : 'none';
       document.getElementById('container-trangthai').style.display = isAdmin ? 'block' : 'none';
 
@@ -1623,7 +1633,7 @@
       document.getElementById('danhGiaBaoCao').value = task.danhGiaBaoCao || '';
       document.getElementById('soVBBanHanh').value = task.soVBBanHanh || '';
 
-      const isAdmin = (currentUserSession.role === "Admin");
+      const isAdmin = (['Admin','Trưởng phòng','Phó phòng'].includes(currentUserSession.role));
       document.getElementById('container-danhgia').style.display = isAdmin ? 'block' : 'none';
       document.getElementById('container-trangthai').style.display = isAdmin ? 'block' : 'none';
 
